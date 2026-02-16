@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,10 +17,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.basitbhatti.compose.ui.library.ui.components.Alert
+import com.basitbhatti.compose.ui.library.ui.components.CustomIconAlert
 import com.basitbhatti.compose.ui.library.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,46 +30,44 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
 
-                var visible by remember { mutableStateOf(false) }
+                var showAlert by remember { mutableStateOf(false) }
 
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
                     Button(
                         onClick = {
-                            visible = !visible
-                        }
-                    ) {
+                            showAlert = !showAlert
+                        }) {
                         Text("Delete")
                     }
 
-                    Alert(
-                        visible = visible,
-                        icon = {
-                            Icon(painter = painterResource(R.drawable.delete), modifier = Modifier.size(35.dp), contentDescription =  "Delete")
-                        },
-                        title = {
-                            Text("Delete this file?")
-                        },
-                        body = {
-                            Text("This action cannot be undone!")
-                        },
-                        positiveButton = {
-                            Button(onClick = {
-                                visible = !visible
+                    CustomIconAlert(visible = showAlert, icon = {
+                        Icon(
+                            painter = painterResource(R.drawable.delete), contentDescription = ""
+                        )
+                    }, title = {
+                        Text("Delete this file?")
+                    }, body = {
+                        Text("This action cannot be undone. The file will be permanently removed.")
+                    }, positiveButton = {
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFE70A0A)
+                            ), onClick = {
+                                showAlert = !showAlert
                             }) {
-                                Text("Delete")
-                            }
-                        },
-                        negativeButton = {
-                            Button(onClick = {
-                                visible = !visible
+                            Text("Delete")
+                        }
+                    }, negativeButton = {
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0x009D9D9D)
+                            ), onClick = {
+                                showAlert = !showAlert
                             }) {
-                                Text("Cancel")
-                            }
-                        },
-                        neutralButton = {}
-
-                    )
+                            Text("Cancel", color = Color.DarkGray)
+                        }
+                    })
 
 
                 }
@@ -81,8 +79,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
-        modifier = modifier
+        text = "Hello $name!", modifier = modifier
     )
 }
 
