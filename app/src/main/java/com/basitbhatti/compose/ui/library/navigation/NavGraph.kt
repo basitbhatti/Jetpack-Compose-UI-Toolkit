@@ -14,7 +14,6 @@ fun NavGraph(controller: NavHostController) {
         composable(route = Screen.HomeScreen.route) {
             HomeScreen(controller)
         }
-
         composable(Screen.AlertScreen.route) {
             AlertScreen(controller)
         }
