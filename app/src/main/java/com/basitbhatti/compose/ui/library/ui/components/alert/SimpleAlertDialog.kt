@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui.library.ui.alert
+package com.basitbhatti.compose.ui.library.ui.components.alert
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LongContentAlertDialog(
+fun SimpleAlertDialog(
     visible: Boolean,
     title: @Composable () -> Unit,
     body: @Composable () -> Unit,
@@ -124,25 +124,23 @@ fun LongContentAlertDialog(
 
 @Preview
 @Composable
-private fun LongContentDialogPrev() {
-    LongContentAlertDialog (
+private fun SimpleAlertPrev() {
+    SimpleAlertDialog(
         visible = true,
         title = {
-            Text("Terms & Conditions")
+            Text("Exit App?")
         },
         body = {
-            Text("Terms and conditions text. Terms and conditions text. Terms and conditions text. " +
-                    "Terms and conditions text. Terms and conditions text. Terms and conditions text. Terms and conditions text." +
-                    " Terms and conditions text. Terms and conditions text. Terms and conditions text. ")
+            Text("Exiting this app discard unsaved changes.")
         },
         positiveButton = {
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0ABBE7)
+                    containerColor = Color(0xFFE70A0A)
                 ),
                 onClick = {}
             ) {
-                Text("Accept")
+                Text("Exit")
             }
         },
         negativeButton = {
@@ -152,7 +150,7 @@ private fun LongContentDialogPrev() {
                 ),
                 onClick = {}
             ) {
-                Text("Decline", color = Color.DarkGray)
+                Text("Cancel", color = Color.DarkGray)
             }
         }
     )

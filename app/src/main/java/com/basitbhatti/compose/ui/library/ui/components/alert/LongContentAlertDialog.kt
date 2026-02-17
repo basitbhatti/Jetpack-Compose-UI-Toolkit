@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui.library.ui.alert
+package com.basitbhatti.compose.ui.library.ui.components.alert
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -31,11 +32,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SingleButtonAlertDialog(
+fun LongContentAlertDialog(
     visible: Boolean,
     title: @Composable () -> Unit,
     body: @Composable () -> Unit,
-    button: @Composable () -> Unit,
+    positiveButton: @Composable () -> Unit,
+    negativeButton: @Composable () -> Unit,
 ) {
 
     AnimatedVisibility(
@@ -49,6 +51,7 @@ fun SingleButtonAlertDialog(
             targetScale = 0.95f, animationSpec = tween(220)
         )
     ) {
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -90,38 +93,66 @@ fun SingleButtonAlertDialog(
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    button()
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.7f),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+
+                        negativeButton()
+
+                        Spacer(Modifier.width(5.dp))
+
+                        positiveButton()
+
+                    }
 
                 }
+
             }
+
         }
+
     }
 
 }
 
+
 @Preview
 @Composable
-private fun SingleButtonAlertPrev() {
-    SingleButtonAlertDialog(
+private fun LongContentDialogPrev() {
+    LongContentAlertDialog (
         visible = true,
         title = {
-            Text("Order Placed")
+            Text("Terms & Conditions")
         },
         body = {
-            Text("Your order has been placed successfully.")
+            Text("Terms and conditions text. Terms and conditions text. Terms and conditions text. " +
+                    "Terms and conditions text. Terms and conditions text. Terms and conditions text. Terms and conditions text." +
+                    " Terms and conditions text. Terms and conditions text. Terms and conditions text. ")
         },
-        button = {
+        positiveButton = {
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF33C7C7)
+                    containerColor = Color(0xFF0ABBE7)
                 ),
                 onClick = {}
             ) {
-                Text("Okay")
+                Text("Accept")
+            }
+        },
+        negativeButton = {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0x009D9D9D)
+                ),
+                onClick = {}
+            ) {
+                Text("Decline", color = Color.DarkGray)
             }
         }
     )
