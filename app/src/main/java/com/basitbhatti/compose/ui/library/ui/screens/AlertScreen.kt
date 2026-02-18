@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.BatteryAlert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.basitbhatti.compose.ui.library.ui.components.alert.CustomIconAlert
 import com.basitbhatti.compose.ui.library.ui.components.alert.LongContentAlertDialog
 import com.basitbhatti.compose.ui.library.ui.components.alert.SimpleAlertDialog
 import com.basitbhatti.compose.ui.library.ui.components.alert.SingleButtonAlertDialog
@@ -105,7 +107,6 @@ fun AlertScreen(
 
         }
 
-
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
@@ -124,6 +125,24 @@ fun AlertScreen(
 
         }
 
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .height(50.dp), shape = RoundedCornerShape(5.dp),
+
+            onClick = {
+                showCustomIconAlert = !showCustomIconAlert
+            }) {
+
+            Text(
+                "Custom Icon Dialog",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+            )
+
+        }
+
     }
 
 
@@ -131,6 +150,42 @@ fun AlertScreen(
         Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
 
+        if (showCustomIconAlert) {
+            CustomIconAlert(
+                visible = showCustomIconAlert,
+                onDismissRequest = {
+                    showCustomIconAlert = !showCustomIconAlert
+                },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.BatteryAlert,
+                        contentDescription = "Icon"
+                    )
+                },
+                title = {
+                    Text("Custom Icon Dialog")
+                },
+                body = {
+                    Text("Body text of the custom icon alert dialog.")
+
+                },
+                positiveButton = {
+                    TextButton(
+                        onClick = {
+                            showCustomIconAlert = !showCustomIconAlert
+                        }) {
+                        Text("OK", color = MaterialTheme.colorScheme.onBackground)
+                    }
+                }, negativeButton = {
+                    TextButton(
+                        onClick = {
+                            showCustomIconAlert = !showCustomIconAlert
+                        }) {
+                        Text("Cancel", color = MaterialTheme.colorScheme.onBackground)
+                    }
+                }
+            )
+        }
 
         if (showLongContentAlert) {
             LongContentAlertDialog(visible = showLongContentAlert, onDismissRequest = {
@@ -142,7 +197,7 @@ fun AlertScreen(
             }, positiveButton = {
                 TextButton(
                     onClick = {
-                        showSimpleAlert = !showSimpleAlert
+                        showLongContentAlert = !showLongContentAlert
                     }) {
                     Text("OK", color = MaterialTheme.colorScheme.onBackground)
                 }
@@ -180,7 +235,7 @@ fun AlertScreen(
             }, title = {
                 Text("Simple Alert Example")
             }, body = {
-                Text("Body text of the simple alert dailog.")
+                Text("Body text of the simple alert dialog.")
             }, positiveButton = {
                 TextButton(
                     onClick = {

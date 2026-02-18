@@ -75,9 +75,8 @@ fun InputAlertDialog(
                 Spacer(Modifier.height(5.dp))
 
                 CompositionLocalProvider(
-                    LocalTextStyle provides MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 18.sp
+                    LocalTextStyle provides MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Bold
                     )
                 ) {
                     title()
