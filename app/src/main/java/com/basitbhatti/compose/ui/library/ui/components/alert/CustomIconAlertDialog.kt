@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.basitbhatti.compose.ui.library.R
@@ -83,7 +84,8 @@ fun CustomIconAlert(
 
                     CompositionLocalProvider(
                         LocalTextStyle provides MaterialTheme.typography.bodyMedium.copy(
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp
                         )
                     ) {
                         title()

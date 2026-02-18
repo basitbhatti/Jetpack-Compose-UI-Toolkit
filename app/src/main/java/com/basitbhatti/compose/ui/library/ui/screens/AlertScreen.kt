@@ -13,10 +13,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.BatteryAlert
+import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -32,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.basitbhatti.compose.ui.library.ui.components.alert.CustomIconAlert
+import com.basitbhatti.compose.ui.library.ui.components.alert.InputAlertDialog
 import com.basitbhatti.compose.ui.library.ui.components.alert.LongContentAlertDialog
 import com.basitbhatti.compose.ui.library.ui.components.alert.SimpleAlertDialog
 import com.basitbhatti.compose.ui.library.ui.components.alert.SingleButtonAlertDialog
@@ -143,6 +146,24 @@ fun AlertScreen(
 
         }
 
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .height(50.dp), shape = RoundedCornerShape(5.dp),
+
+            onClick = {
+                showInputAlert = !showInputAlert
+            }) {
+
+            Text(
+                "Input Dialog",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+            )
+
+        }
+
     }
 
 
@@ -150,41 +171,75 @@ fun AlertScreen(
         Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
 
-        if (showCustomIconAlert) {
-            CustomIconAlert(
-                visible = showCustomIconAlert,
-                onDismissRequest = {
-                    showCustomIconAlert = !showCustomIconAlert
-                },
-                icon = {
-                    Icon(
-                        imageVector = Icons.Default.BatteryAlert,
-                        contentDescription = "Icon"
-                    )
-                },
-                title = {
-                    Text("Custom Icon Dialog")
-                },
-                body = {
-                    Text("Body text of the custom icon alert dialog.")
+        if (showInputAlert) {
 
-                },
-                positiveButton = {
-                    TextButton(
-                        onClick = {
-                            showCustomIconAlert = !showCustomIconAlert
-                        }) {
-                        Text("OK", color = MaterialTheme.colorScheme.onBackground)
+            var inputValue by remember { mutableStateOf("") }
+
+            InputAlertDialog(visible = showInputAlert, onDismissRequest = {
+                showInputAlert = !showInputAlert
+            }, title = {
+                Text("Input Field Dialog")
+            }, body = {
+                Text("This alert dialog has an input field.")
+            }, inputField = {
+                OutlinedTextField(
+                    value = inputValue,
+                    onValueChange = { inputValue = it },
+                    placeholder = {
+                        Text("Enter Email")
+                    },
+                    leadingIcon = {
+                        Icon(imageVector = Icons.Rounded.Email, "Email")
                     }
-                }, negativeButton = {
-                    TextButton(
-                        onClick = {
-                            showCustomIconAlert = !showCustomIconAlert
-                        }) {
-                        Text("Cancel", color = MaterialTheme.colorScheme.onBackground)
-                    }
+
+                )
+            }, positiveButton = {
+                TextButton(
+                    onClick = {
+                        showInputAlert = !showInputAlert
+                    }) {
+                    Text("OK", color = MaterialTheme.colorScheme.onBackground)
                 }
+            }, negativeButton = {
+                TextButton(
+                    onClick = {
+                        showInputAlert = !showInputAlert
+                    }) {
+                    Text("Cancel", color = MaterialTheme.colorScheme.onBackground)
+                }
+            }
+
             )
+        }
+
+
+        if (showCustomIconAlert) {
+            CustomIconAlert(visible = showCustomIconAlert, onDismissRequest = {
+                showCustomIconAlert = !showCustomIconAlert
+            }, icon = {
+                Icon(
+                    imageVector = Icons.Default.BatteryAlert, contentDescription = "Icon"
+                )
+            }, title = {
+                Text("Custom Icon Dialog")
+            }, body = {
+                Text("Body text of the custom icon alert dialog.")
+
+            }, positiveButton = {
+                TextButton(
+                    onClick = {
+                        showCustomIconAlert = !showCustomIconAlert
+                    }) {
+                    Text("OK", color = MaterialTheme.colorScheme.onBackground)
+                }
+            }, negativeButton = {
+                TextButton(
+                    onClick = {
+                        showCustomIconAlert = !showCustomIconAlert
+                    }) {
+                    Text("Cancel", color = MaterialTheme.colorScheme.onBackground)
+                }
+            })
         }
 
         if (showLongContentAlert) {
