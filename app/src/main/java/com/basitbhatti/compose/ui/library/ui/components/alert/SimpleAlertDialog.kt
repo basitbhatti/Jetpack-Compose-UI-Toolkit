@@ -67,8 +67,8 @@ fun SimpleAlertDialog(
                     Spacer(Modifier.height(5.dp))
 
                     CompositionLocalProvider(
-                        LocalTextStyle provides MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.Medium
+                        LocalTextStyle provides MaterialTheme.typography.bodyMedium.copy(
+                            fontWeight = FontWeight.Bold
                         )
                     ) {
                         title()

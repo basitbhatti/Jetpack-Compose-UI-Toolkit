@@ -19,6 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -117,13 +118,11 @@ fun AlertScreen(
             }, body = {
                 Text("Body Text Goes Here")
             }, button = {
-                Button(
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onBackground
-                    ), onClick = {
+                TextButton(
+                    onClick = {
                         showSingleButtonAlert = !showSingleButtonAlert
                     }) {
-                    Text("OK")
+                    Text("OK", color = MaterialTheme.colorScheme.onBackground)
                 }
             })
         }
@@ -137,22 +136,18 @@ fun AlertScreen(
             }, body = {
                 Text("Body text of the simple alert dailog.")
             }, positiveButton = {
-                Button(
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onBackground
-                    ), onClick = {
+                TextButton(
+                    onClick = {
                         showSimpleAlert = !showSimpleAlert
                     }) {
-                    Text("Okay")
+                    Text("OK", color = MaterialTheme.colorScheme.onBackground)
                 }
             }, negativeButton = {
-                Button(
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0x00673232)
-                    ), onClick = {
+                TextButton(
+                   onClick = {
                         showSimpleAlert = !showSimpleAlert
                     }) {
-                    Text("Cancel", color = Color.Gray)
+                    Text("Cancel", color = MaterialTheme.colorScheme.onBackground)
                 }
             })
         }
