@@ -2,7 +2,8 @@ package com.basitbhatti.compose.ui.library.ui.components.alert
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -27,13 +27,15 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SingleButtonAlertDialog(
+fun SimpleAlertDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
     title: @Composable () -> Unit,
     body: @Composable () -> Unit,
-    button: @Composable () -> Unit,
+    positiveButton: @Composable () -> Unit,
+    negativeButton: @Composable () -> Unit,
 ) {
 
     if (visible) {
@@ -42,6 +44,7 @@ fun SingleButtonAlertDialog(
             onDismissRequest = onDismissRequest,
             properties = DialogProperties(usePlatformDefaultWidth = false)
         ) {
+
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -82,45 +85,52 @@ fun SingleButtonAlertDialog(
 
                     Spacer(Modifier.height(5.dp))
 
-                    Row(
+
+                    FlowRow(
+                        maxItemsInEachRow = 2,
                         modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = Arrangement.End,
                     ) {
 
-                        button()
+                        negativeButton()
+
+                        positiveButton()
 
                     }
+
                 }
+
             }
+
         }
+
     }
 
 }
 
+
 @Preview
 @Composable
-private fun SingleButtonAlertPrev() {
-    SingleButtonAlertDialog(
-        visible = true,
-        onDismissRequest = {
+private fun SimpleAlertPrev() {
+    SimpleAlertDialog(visible = true, onDismissRequest = {
 
-        },
-        title = {
-            Text("Order Placed")
-        },
-        body = {
-            Text("Your order has been placed successfully.")
-        },
-        button = {
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF33C7C7)
-                ),
-                onClick = {}
-            ) {
-                Text("Okay")
-            }
+    }, title = {
+        Text("Exit App?")
+    }, body = {
+        Text("Exiting this app discard unsaved changes.")
+    }, positiveButton = {
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFE70A0A)
+            ), onClick = {}) {
+            Text("Exit")
         }
-    )
+    }, negativeButton = {
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0x009D9D9D)
+            ), onClick = {}) {
+            Text("Cancel", color = Color.DarkGray)
+        }
+    })
 }

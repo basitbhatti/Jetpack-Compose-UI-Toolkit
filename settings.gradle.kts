@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ComposeLibrary"
 include(":app")
+include(":ui-kit")

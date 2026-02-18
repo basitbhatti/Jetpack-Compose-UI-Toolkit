@@ -1,14 +1,19 @@
+@file:OptIn(ExperimentalLayoutApi::class)
+
 package com.basitbhatti.compose.ui.library.ui.components.alert
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -32,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.basitbhatti.compose.ui.library.R
 import com.basitbhatti.compose.ui.library.ui.theme.AppTheme
 
 @Composable
@@ -136,7 +140,7 @@ private fun CustomIconAlertPrev() {
 
             }, icon = {
                 Icon(
-                    painter = painterResource(R.drawable.delete), contentDescription = ""
+                    imageVector = Icons.Rounded.Delete, contentDescription = ""
                 )
             }, title = {
                 Text("Delete this file?")
