@@ -21,12 +21,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AppTheme {
-
                 val navController = rememberNavController()
-
                 NavGraph(controller = navController)
-
-
             }
         }
     }

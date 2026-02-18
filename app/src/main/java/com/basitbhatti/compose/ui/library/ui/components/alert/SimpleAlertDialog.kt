@@ -30,84 +30,84 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 
 @Composable
 fun SimpleAlertDialog(
     visible: Boolean,
+    onDismissRequest: () -> Unit,
     title: @Composable () -> Unit,
     body: @Composable () -> Unit,
     positiveButton: @Composable () -> Unit,
     negativeButton: @Composable () -> Unit,
 ) {
 
-    AnimatedVisibility(
-        visible = visible, enter = fadeIn(
-            animationSpec = tween(220)
-        ) + scaleIn(
-            initialScale = 0.9f, animationSpec = tween(220)
-        ), exit = fadeOut(
-            animationSpec = tween(220)
-        ) + scaleOut(
-            targetScale = 0.95f, animationSpec = tween(220)
-        )
-    ) {
+    if (visible){
 
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 120.dp)
-                .padding(25.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.White
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 5.dp
-            )
+        Dialog(
+            onDismissRequest = onDismissRequest,
+            properties = DialogProperties(usePlatformDefaultWidth = false)
         ) {
 
-            Column(
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(15.dp)
+                    .heightIn(min = 120.dp)
+                    .padding(25.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 5.dp
+                )
             ) {
 
-                Spacer(Modifier.height(5.dp))
-
-                CompositionLocalProvider(
-                    LocalTextStyle provides MaterialTheme.typography.headlineSmall.copy(
-                        fontWeight = FontWeight.Medium
-                    )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(15.dp)
                 ) {
-                    title()
-                }
 
-                Spacer(Modifier.height(5.dp))
+                    Spacer(Modifier.height(5.dp))
 
-                CompositionLocalProvider(
-                    LocalTextStyle provides MaterialTheme.typography.bodyMedium
-                ) {
-                    body()
-                }
+                    CompositionLocalProvider(
+                        LocalTextStyle provides MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Medium
+                        )
+                    ) {
+                        title()
+                    }
 
-                Spacer(Modifier.height(5.dp))
+                    Spacer(Modifier.height(5.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                    CompositionLocalProvider(
+                        LocalTextStyle provides MaterialTheme.typography.bodyMedium
+                    ) {
+                        body()
+                    }
+
+                    Spacer(Modifier.height(5.dp))
 
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(0.7f),
-                        horizontalArrangement = Arrangement.End
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        negativeButton()
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(0.7f),
+                            horizontalArrangement = Arrangement.End
+                        ) {
 
-                        Spacer(Modifier.width(5.dp))
+                            negativeButton()
 
-                        positiveButton()
+                            Spacer(Modifier.width(5.dp))
+
+                            positiveButton()
+
+                        }
 
                     }
 
@@ -127,6 +127,9 @@ fun SimpleAlertDialog(
 private fun SimpleAlertPrev() {
     SimpleAlertDialog(
         visible = true,
+        onDismissRequest = {
+
+        },
         title = {
             Text("Exit App?")
         },

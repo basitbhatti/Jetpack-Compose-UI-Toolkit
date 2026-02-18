@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -35,7 +38,9 @@ import com.basitbhatti.compose.ui.library.ui.theme.AppTheme
 @Composable
 fun AlertScreen(
     navController: NavHostController,
-    rootModifier: Modifier = Modifier.background(MaterialTheme.colorScheme.background)
+    rootModifier: Modifier = Modifier
+        .background(MaterialTheme.colorScheme.background)
+        .systemBarsPadding()
 ) {
 
     var showSimpleAlert by remember { mutableStateOf(false) }
@@ -67,12 +72,17 @@ fun AlertScreen(
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp),
+                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .height(50.dp), shape = RoundedCornerShape(5.dp),
+
             onClick = {
                 showSimpleAlert = !showSimpleAlert
-            }
-        ) {
-            Text("Simple Alert Dialog")
+            }) {
+            Text(
+                "Simple Alert Dialog",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+            )
         }
 
     }
@@ -80,43 +90,35 @@ fun AlertScreen(
 
 
     Box(
-        Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ){
-        if (showSimpleAlert){
-            SimpleAlertDialog(
-                visible = showSimpleAlert,
-                title = {
-                    Text("Simple Alert Example")
-                },
-                body = {
-                    Text("Body text of the simple alert dailog.")
-                },
-                positiveButton = {
-                    Button(
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.onBackground
-                        ),
-                        onClick = {
-                            showSimpleAlert = !showSimpleAlert
-                        }
-                    ) {
-                        Text("Okay")
-                    }
-                },
-                negativeButton = {
-                    Button(
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0x00673232)
-                        ),
-                        onClick = {
-                            showSimpleAlert = !showSimpleAlert
-                        }
-                    ) {
-                        Text("Cancel")
-                    }
+        Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+    ) {
+        if (showSimpleAlert) {
+            SimpleAlertDialog(visible = showSimpleAlert,
+                onDismissRequest = {
+                    showSimpleAlert = !showSimpleAlert
+                }, title = {
+                Text("Simple Alert Example")
+            }, body = {
+                Text("Body text of the simple alert dailog.")
+            }, positiveButton = {
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.onBackground
+                    ), onClick = {
+                        showSimpleAlert = !showSimpleAlert
+                    }) {
+                    Text("Okay")
                 }
-            )
+            }, negativeButton = {
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0x00673232)
+                    ), onClick = {
+                        showSimpleAlert = !showSimpleAlert
+                    }) {
+                    Text("Cancel", color = Color.Gray)
+                }
+            })
         }
     }
 
