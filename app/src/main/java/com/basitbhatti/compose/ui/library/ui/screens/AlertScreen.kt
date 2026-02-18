@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,12 +25,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.basitbhatti.compose.ui.library.ui.components.alert.LongContentAlertDialog
 import com.basitbhatti.compose.ui.library.ui.components.alert.SimpleAlertDialog
 import com.basitbhatti.compose.ui.library.ui.components.alert.SingleButtonAlertDialog
 import com.basitbhatti.compose.ui.library.ui.theme.AppTheme
@@ -47,6 +45,9 @@ fun AlertScreen(
 
     var showSimpleAlert by remember { mutableStateOf(false) }
     var showSingleButtonAlert by remember { mutableStateOf(false) }
+    var showLongContentAlert by remember { mutableStateOf(false) }
+    var showInputAlert by remember { mutableStateOf(false) }
+    var showCustomIconAlert by remember { mutableStateOf(false) }
 
     Column(
         modifier = rootModifier
@@ -75,7 +76,7 @@ fun AlertScreen(
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .padding(start = 15.dp, top = 35.dp, end = 15.dp)
                 .height(50.dp), shape = RoundedCornerShape(5.dp), onClick = {
                 showSimpleAlert = !showSimpleAlert
             }) {
@@ -101,6 +102,26 @@ fun AlertScreen(
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
             )
+
+        }
+
+
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .height(50.dp), shape = RoundedCornerShape(5.dp),
+
+            onClick = {
+                showLongContentAlert = !showLongContentAlert
+            }) {
+
+            Text(
+                "Long Content Dialog",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+            )
+
         }
 
     }
@@ -109,6 +130,31 @@ fun AlertScreen(
     Box(
         Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
+
+
+        if (showLongContentAlert) {
+            LongContentAlertDialog(visible = showLongContentAlert, onDismissRequest = {
+                showLongContentAlert = !showLongContentAlert
+            }, title = {
+                Text("Long Content Dialog")
+            }, body = {
+                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
+            }, positiveButton = {
+                TextButton(
+                    onClick = {
+                        showSimpleAlert = !showSimpleAlert
+                    }) {
+                    Text("OK", color = MaterialTheme.colorScheme.onBackground)
+                }
+            }, negativeButton = {
+                TextButton(
+                    onClick = {
+                        showLongContentAlert = !showLongContentAlert
+                    }) {
+                    Text("Cancel", color = MaterialTheme.colorScheme.onBackground)
+                }
+            })
+        }
 
         if (showSingleButtonAlert) {
             SingleButtonAlertDialog(visible = showSingleButtonAlert, onDismissRequest = {
@@ -144,7 +190,7 @@ fun AlertScreen(
                 }
             }, negativeButton = {
                 TextButton(
-                   onClick = {
+                    onClick = {
                         showSimpleAlert = !showSimpleAlert
                     }) {
                     Text("Cancel", color = MaterialTheme.colorScheme.onBackground)
