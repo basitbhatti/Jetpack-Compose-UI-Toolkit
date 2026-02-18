@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.basitbhatti.compose.ui.library.ui.components.alert.SimpleAlertDialog
+import com.basitbhatti.compose.ui.library.ui.components.alert.SingleButtonAlertDialog
 import com.basitbhatti.compose.ui.library.ui.theme.AppTheme
 
 @Composable
@@ -44,6 +45,7 @@ fun AlertScreen(
 ) {
 
     var showSimpleAlert by remember { mutableStateOf(false) }
+    var showSingleButtonAlert by remember { mutableStateOf(false) }
 
     Column(
         modifier = rootModifier
@@ -73,9 +75,7 @@ fun AlertScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 15.dp, top = 15.dp, end = 15.dp)
-                .height(50.dp), shape = RoundedCornerShape(5.dp),
-
-            onClick = {
+                .height(50.dp), shape = RoundedCornerShape(5.dp), onClick = {
                 showSimpleAlert = !showSimpleAlert
             }) {
             Text(
@@ -85,18 +85,54 @@ fun AlertScreen(
             )
         }
 
-    }
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .height(50.dp), shape = RoundedCornerShape(5.dp),
 
+            onClick = {
+                showSingleButtonAlert = !showSingleButtonAlert
+            }) {
+
+            Text(
+                "Single Button Alert Dialog",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+            )
+        }
+
+    }
 
 
     Box(
         Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
+
+        if (showSingleButtonAlert) {
+            SingleButtonAlertDialog(visible = showSingleButtonAlert, onDismissRequest = {
+                showSingleButtonAlert = !showSingleButtonAlert
+            }, title = {
+                Text("Single Button Alert")
+            }, body = {
+                Text("Body Text Goes Here")
+            }, button = {
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.onBackground
+                    ), onClick = {
+                        showSingleButtonAlert = !showSingleButtonAlert
+                    }) {
+                    Text("OK")
+                }
+            })
+        }
+
+
         if (showSimpleAlert) {
-            SimpleAlertDialog(visible = showSimpleAlert,
-                onDismissRequest = {
-                    showSimpleAlert = !showSimpleAlert
-                }, title = {
+            SimpleAlertDialog(visible = showSimpleAlert, onDismissRequest = {
+                showSimpleAlert = !showSimpleAlert
+            }, title = {
                 Text("Simple Alert Example")
             }, body = {
                 Text("Body text of the simple alert dailog.")

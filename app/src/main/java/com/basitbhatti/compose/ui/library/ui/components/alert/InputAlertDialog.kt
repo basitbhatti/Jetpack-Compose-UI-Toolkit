@@ -11,6 +11,7 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,7 +39,8 @@ fun InputAlertDialog(
     title: @Composable () -> Unit,
     inputField: @Composable () -> Unit,
     body: @Composable () -> Unit,
-    button: @Composable () -> Unit
+    positiveButton: @Composable () -> Unit,
+    negativeButton: @Composable () -> Unit
 ) {
 
     AnimatedVisibility(
@@ -95,15 +97,15 @@ fun InputAlertDialog(
 
                 Spacer(Modifier.height(5.dp))
 
-                Row(
+                FlowRow (
+                    maxItemsInEachRow = 2,
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End
+                    horizontalArrangement = Arrangement.End,
                 ) {
 
-                    Spacer(Modifier.width(5.dp))
+                    negativeButton()
 
-                    button()
+                    positiveButton()
 
                 }
             }

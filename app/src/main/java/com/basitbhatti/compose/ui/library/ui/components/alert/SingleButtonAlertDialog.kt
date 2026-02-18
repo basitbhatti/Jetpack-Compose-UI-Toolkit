@@ -1,11 +1,5 @@
 package com.basitbhatti.compose.ui.library.ui.components.alert
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,73 +23,72 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 
 @Composable
 fun SingleButtonAlertDialog(
     visible: Boolean,
+    onDismissRequest: () -> Unit,
     title: @Composable () -> Unit,
     body: @Composable () -> Unit,
     button: @Composable () -> Unit,
 ) {
 
-    AnimatedVisibility(
-        visible = visible, enter = fadeIn(
-            animationSpec = tween(220)
-        ) + scaleIn(
-            initialScale = 0.9f, animationSpec = tween(220)
-        ), exit = fadeOut(
-            animationSpec = tween(220)
-        ) + scaleOut(
-            targetScale = 0.95f, animationSpec = tween(220)
-        )
-    ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 120.dp)
-                .padding(25.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.White
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 5.dp
-            )
-        ) {
+    if (visible) {
 
-            Column(
+        Dialog(
+            onDismissRequest = onDismissRequest,
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(15.dp)
+                    .heightIn(min = 120.dp)
+                    .padding(25.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 5.dp
+                )
             ) {
 
-                Spacer(Modifier.height(5.dp))
-
-                CompositionLocalProvider(
-                    LocalTextStyle provides MaterialTheme.typography.headlineSmall.copy(
-                        fontWeight = FontWeight.Medium
-                    )
-                ) {
-                    title()
-                }
-
-                Spacer(Modifier.height(5.dp))
-
-                CompositionLocalProvider(
-                    LocalTextStyle provides MaterialTheme.typography.bodyMedium
-                ) {
-                    body()
-                }
-
-                Spacer(Modifier.height(5.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(15.dp)
                 ) {
 
-                    button()
+                    Spacer(Modifier.height(5.dp))
 
+                    CompositionLocalProvider(
+                        LocalTextStyle provides MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Medium
+                        )
+                    ) {
+                        title()
+                    }
+
+                    Spacer(Modifier.height(5.dp))
+
+                    CompositionLocalProvider(
+                        LocalTextStyle provides MaterialTheme.typography.bodyMedium
+                    ) {
+                        body()
+                    }
+
+                    Spacer(Modifier.height(5.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
+                    ) {
+
+                        button()
+
+                    }
                 }
             }
         }
@@ -108,6 +101,9 @@ fun SingleButtonAlertDialog(
 private fun SingleButtonAlertPrev() {
     SingleButtonAlertDialog(
         visible = true,
+        onDismissRequest = {
+
+        },
         title = {
             Text("Order Placed")
         },

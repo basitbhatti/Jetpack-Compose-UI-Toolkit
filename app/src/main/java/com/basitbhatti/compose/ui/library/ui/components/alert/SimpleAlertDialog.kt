@@ -1,13 +1,8 @@
 package com.basitbhatti.compose.ui.library.ui.components.alert
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,7 +38,7 @@ fun SimpleAlertDialog(
     negativeButton: @Composable () -> Unit,
 ) {
 
-    if (visible){
+    if (visible) {
 
         Dialog(
             onDismissRequest = onDismissRequest,
@@ -89,25 +84,16 @@ fun SimpleAlertDialog(
 
                     Spacer(Modifier.height(5.dp))
 
-                    Row(
+
+                    FlowRow (
+                        maxItemsInEachRow = 2,
                         modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
+                        horizontalArrangement = Arrangement.End,
                     ) {
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(0.7f),
-                            horizontalArrangement = Arrangement.End
-                        ) {
+                        negativeButton()
 
-                            negativeButton()
-
-                            Spacer(Modifier.width(5.dp))
-
-                            positiveButton()
-
-                        }
+                        positiveButton()
 
                     }
 
@@ -125,36 +111,25 @@ fun SimpleAlertDialog(
 @Preview
 @Composable
 private fun SimpleAlertPrev() {
-    SimpleAlertDialog(
-        visible = true,
-        onDismissRequest = {
+    SimpleAlertDialog(visible = true, onDismissRequest = {
 
-        },
-        title = {
-            Text("Exit App?")
-        },
-        body = {
-            Text("Exiting this app discard unsaved changes.")
-        },
-        positiveButton = {
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFE70A0A)
-                ),
-                onClick = {}
-            ) {
-                Text("Exit")
-            }
-        },
-        negativeButton = {
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0x009D9D9D)
-                ),
-                onClick = {}
-            ) {
-                Text("Cancel", color = Color.DarkGray)
-            }
+    }, title = {
+        Text("Exit App?")
+    }, body = {
+        Text("Exiting this app discard unsaved changes.")
+    }, positiveButton = {
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFE70A0A)
+            ), onClick = {}) {
+            Text("Exit")
         }
-    )
+    }, negativeButton = {
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0x009D9D9D)
+            ), onClick = {}) {
+            Text("Cancel", color = Color.DarkGray)
+        }
+    })
 }
