@@ -61,7 +61,7 @@ fun SingleButtonAlertDialog(
                         .padding(15.dp)
                 ) {
 
-                    Spacer(Modifier.height(5.dp))
+                    Spacer(Modifier.height(10.dp))
 
                     CompositionLocalProvider(
                         LocalTextStyle provides MaterialTheme.typography.bodyMedium.copy(
