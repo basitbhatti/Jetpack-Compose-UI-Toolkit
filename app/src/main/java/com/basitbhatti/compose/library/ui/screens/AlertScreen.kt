@@ -33,12 +33,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.basitbhatti.compose.ui.library.ui.components.alert.CustomIconAlert
-import com.basitbhatti.compose.ui.library.ui.components.alert.InputAlertDialog
-import com.basitbhatti.compose.ui.library.ui.components.alert.LongContentAlertDialog
-import com.basitbhatti.compose.ui.library.ui.components.alert.SimpleAlertDialog
-import com.basitbhatti.compose.ui.library.ui.components.alert.SingleButtonAlertDialog
 import com.basitbhatti.compose.ui.library.ui.theme.AppTheme
+import com.basitbhatti.compose.ui_kit.alert.CustomIconAlert
+import com.basitbhatti.compose.ui_kit.alert.InputAlertDialog
+import com.basitbhatti.compose.ui_kit.alert.LongContentAlertDialog
+import com.basitbhatti.compose.ui_kit.alert.SimpleAlertDialog
+import com.basitbhatti.compose.ui_kit.alert.SingleButtonAlertDialog
 
 @Composable
 fun AlertScreen(

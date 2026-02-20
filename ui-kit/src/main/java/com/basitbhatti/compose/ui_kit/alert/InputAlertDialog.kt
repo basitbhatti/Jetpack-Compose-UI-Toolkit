@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui.library.ui.components.alert
+package com.basitbhatti.compose.ui_kit.alert
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
