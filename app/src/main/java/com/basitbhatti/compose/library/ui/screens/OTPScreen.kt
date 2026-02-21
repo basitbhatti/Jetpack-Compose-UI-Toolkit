@@ -80,7 +80,7 @@ fun OTPScreen(
 
             RadioButton(
                 selected = maxLength == 4, onClick = {
-                    if (maxLength != 4){
+                    if (maxLength != 4) {
                         maxLength = 4
                         otpText = ""
                     }
@@ -107,8 +107,6 @@ fun OTPScreen(
 
         }
 
-
     }
-
 
 }
