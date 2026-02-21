@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui_kit.alert
+package com.basitbhatti.compose.library.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -83,7 +83,8 @@ fun SimpleAlertDialog(
 
                     Spacer(Modifier.height(5.dp))
 
-                    FlowRow (
+
+                    FlowRow(
                         maxItemsInEachRow = 2,
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.End,
