@@ -116,7 +116,7 @@ fun OTPScreen(
 
         OTPTextFieldOutlined(
             otpText = otpTextOutlined,
-            maxLength = maxLengthFilled,
+            maxLength = maxLengthOutlined,
         ) { txt, isCompleted ->
             otpTextOutlined = txt
         }

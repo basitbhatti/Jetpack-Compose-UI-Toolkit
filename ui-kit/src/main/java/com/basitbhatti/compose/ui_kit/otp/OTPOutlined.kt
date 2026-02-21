@@ -24,13 +24,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -49,6 +52,8 @@ fun OTPTextFieldOutlined(
 ) {
 
     val focusRequester = remember { FocusRequester() }
+
+    var isTextFieldFocused by remember { mutableStateOf(false) }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -70,6 +75,9 @@ fun OTPTextFieldOutlined(
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
+                .onFocusChanged{
+                    isTextFieldFocused = it.isFocused
+                }
                 .alpha(0f),
             cursorBrush = SolidColor(Color.Transparent)
         )
@@ -82,7 +90,7 @@ fun OTPTextFieldOutlined(
         ) {
             repeat(maxLength) { index ->
 
-                val isFocused = otpText.length == index
+                val isFocused = otpText.length == index && isTextFieldFocused
                 val char = when {
                     index < otpText.length -> otpText[index].toString()
                     else -> ""
