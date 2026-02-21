@@ -41,7 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun OTPTextFieldFilled(
+fun OTPTextFieldOutlined(
     otpText: String,
     maxLength: Int,
     backgroundColor: Color = Color.LightGray,
@@ -87,19 +87,19 @@ fun OTPTextFieldFilled(
                     index < otpText.length -> otpText[index].toString()
                     else -> ""
                 }
-                OTPCellFilled(char, isFocused, backgroundColor)
+
+                OTPCellOutlined(char, isFocused, backgroundColor)
 
             }
         }
 
     }
 
-
 }
 
 
 @Composable
-fun OTPCellFilled(
+fun OTPCellOutlined(
     char: String, isFocused: Boolean, backgroundColor: Color, modifier: Modifier = Modifier
 ) {
 
@@ -114,7 +114,7 @@ fun OTPCellFilled(
         1.dp, color = if (isFocused) {
             Color.Black
         } else {
-            Color.Transparent
+            Color.LightGray
         }
     )
 
@@ -122,7 +122,6 @@ fun OTPCellFilled(
         modifier = modifier
             .size(50.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(backgroundColor)
             .border(border = border, shape = RoundedCornerShape(10.dp)),
         contentAlignment = Alignment.Center
     ) {
@@ -146,7 +145,5 @@ fun OTPCellFilled(
 @Preview
 @Composable
 private fun OTPPrev() {
-    OTPTextFieldFilled("", 4) { txt, isCompleted ->
-        
-    }
+
 }
