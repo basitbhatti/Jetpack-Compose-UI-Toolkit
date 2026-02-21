@@ -6,11 +6,13 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(
-    val route: String, val title: String, val icon: ImageVector
+    val route: String
 ) {
+    object HomeScreen : Screen("home_screen")
 
-    object AlertScreen : Screen("alert_screen", "Alert Screen", Icons.Default.AddAlert)
+    object AlertScreen : Screen("alert_screen")
 
-    object HomeScreen : Screen("home_screen", "Home Screen", Icons.Default.Home)
+    object OTPScreen : Screen("otp_screen")
+
 
 }
