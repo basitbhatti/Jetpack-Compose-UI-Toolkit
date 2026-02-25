@@ -5,9 +5,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -22,7 +20,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,20 +28,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun OTPTextFieldOutlined(
+fun OTPTextFieldUnderlined(
     otpText: String,
     maxLength: Int,
     backgroundColor: Color = Color.LightGray,
@@ -75,7 +73,7 @@ fun OTPTextFieldOutlined(
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
-                .onFocusChanged{
+                .onFocusChanged {
                     isTextFieldFocused = it.isFocused
                 }
                 .alpha(0f),
@@ -95,19 +93,18 @@ fun OTPTextFieldOutlined(
                     index < otpText.length -> otpText[index].toString()
                     else -> ""
                 }
-
-                OTPCellOutlined(char, isFocused)
+                OTPCellUnderlined(char, isFocused)
 
             }
         }
 
-    }
 
+    }
 }
 
 
 @Composable
-fun OTPCellOutlined(
+fun OTPCellUnderlined(
     char: String, isFocused: Boolean, modifier: Modifier = Modifier
 ) {
 
@@ -118,25 +115,28 @@ fun OTPCellOutlined(
         )
     )
 
-    val border = BorderStroke(
-        1.dp, color = if (isFocused) {
-            Color.Black
-        } else {
-            Color.LightGray
-        }
-    )
-
     Box(
         modifier = modifier
             .size(50.dp)
             .clip(RoundedCornerShape(10.dp))
-            .border(border = border, shape = RoundedCornerShape(10.dp)),
+            .drawBehind {
+                val strokeWidth = 2.dp.toPx()
+                val y = size.height - strokeWidth / 2
+                drawLine(
+                    color = if (isFocused) Color.Black else Color.Gray,
+                    start = Offset(x = 0f, y = y),
+                    end = Offset(x = size.width, y = y),
+                    strokeWidth = strokeWidth
+                )
+            },
         contentAlignment = Alignment.Center
     ) {
         if (char.isNotEmpty()) {
-            Text(text = char, style = MaterialTheme.typography.bodyMedium.copy(
-                fontWeight = FontWeight.Bold
-            ))
+            Text(
+                text = char, style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold
+                )
+            )
         } else if (isFocused) {
             Box(
                 modifier = Modifier
@@ -150,8 +150,3 @@ fun OTPCellOutlined(
 
 }
 
-@Preview
-@Composable
-private fun OTPPrev() {
-
-}

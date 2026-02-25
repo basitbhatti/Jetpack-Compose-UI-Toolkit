@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.basitbhatti.compose.ui_kit.otp.OTPTextFieldFilled
 import com.basitbhatti.compose.ui_kit.otp.OTPTextFieldOutlined
+import com.basitbhatti.compose.ui_kit.otp.OTPTextFieldUnderlined
 
 @Composable
 fun OTPScreen(
@@ -41,9 +42,11 @@ fun OTPScreen(
 
     var otpTextFilled by remember { mutableStateOf("") }
     var otpTextOutlined by remember { mutableStateOf("") }
+    var otpTextUnderlined by remember { mutableStateOf("") }
 
     var maxLengthFilled by remember { mutableStateOf(4) }
     var maxLengthOutlined by remember { mutableStateOf(4) }
+    var maxLengthUnderlined by remember { mutableStateOf(4) }
 
     Column(
         modifier = modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
@@ -154,6 +157,18 @@ fun OTPScreen(
             Text("6 Digits")
 
         }
+
+        Text("Outlined OTP View Example", modifier.padding(top = 25.dp), style = MaterialTheme.typography.bodyMedium)
+
+        OTPTextFieldUnderlined(
+            otpText = otpTextUnderlined,
+            maxLength = maxLengthUnderlined,
+        ) { txt, isCompleted ->
+            otpTextUnderlined = txt
+        }
+
+
+
 
     }
 
