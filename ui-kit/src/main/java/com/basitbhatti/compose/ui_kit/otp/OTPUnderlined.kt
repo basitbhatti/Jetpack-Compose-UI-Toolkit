@@ -118,7 +118,6 @@ fun OTPCellUnderlined(
     Box(
         modifier = modifier
             .size(50.dp)
-            .clip(RoundedCornerShape(10.dp))
             .drawBehind {
                 val strokeWidth = 2.dp.toPx()
                 val y = size.height - strokeWidth / 2

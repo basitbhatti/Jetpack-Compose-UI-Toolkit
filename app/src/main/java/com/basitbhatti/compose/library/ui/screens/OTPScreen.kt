@@ -1,6 +1,5 @@
 package com.basitbhatti.compose.library.ui.screens
 
-import android.R.attr.maxLength
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -114,7 +113,14 @@ fun OTPScreen(
 
         }
 
-        Text("Outlined OTP View Example", modifier.padding(top = 25.dp), style = MaterialTheme.typography.bodyMedium)
+        Spacer(modifier = Modifier.width(10.dp))
+
+
+        Text(
+            "Outlined OTP View Example",
+            modifier.padding(top = 25.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
 
 
         OTPTextFieldOutlined(
@@ -158,7 +164,14 @@ fun OTPScreen(
 
         }
 
-        Text("Outlined OTP View Example", modifier.padding(top = 25.dp), style = MaterialTheme.typography.bodyMedium)
+        Spacer(modifier = Modifier.width(10.dp))
+
+
+        Text(
+            "Underlined OTP View Example",
+            modifier.padding(top = 25.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
 
         OTPTextFieldUnderlined(
             otpText = otpTextUnderlined,
@@ -168,6 +181,39 @@ fun OTPScreen(
         }
 
 
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            RadioButton(
+                selected = maxLengthUnderlined == 4, onClick = {
+                    if (maxLengthUnderlined != 4) {
+                        maxLengthUnderlined = 4
+                        otpTextUnderlined = ""
+                    }
+                })
+
+            Spacer(modifier = Modifier.width(5.dp))
+
+            Text("4 Digits")
+
+            Spacer(modifier = Modifier.width(25.dp))
+
+            RadioButton(
+                selected = maxLengthUnderlined == 6, onClick = {
+                    if (maxLengthUnderlined != 6) {
+                        maxLengthUnderlined = 6
+                        otpTextUnderlined = ""
+                    }
+                })
+
+            Spacer(modifier = Modifier.width(5.dp))
+
+            Text("6 Digits")
+
+        }
 
 
     }
