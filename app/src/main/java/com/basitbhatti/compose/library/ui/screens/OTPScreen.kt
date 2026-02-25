@@ -166,7 +166,6 @@ fun OTPScreen(
 
         Spacer(modifier = Modifier.width(10.dp))
 
-
         Text(
             "Underlined OTP View Example",
             modifier.padding(top = 25.dp),
@@ -179,7 +178,6 @@ fun OTPScreen(
         ) { txt, isCompleted ->
             otpTextUnderlined = txt
         }
-
 
         Row(
             modifier = Modifier.fillMaxWidth(),
