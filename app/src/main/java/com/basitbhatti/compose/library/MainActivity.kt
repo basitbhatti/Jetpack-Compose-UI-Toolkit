@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui.library
+package com.basitbhatti.compose.library
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
