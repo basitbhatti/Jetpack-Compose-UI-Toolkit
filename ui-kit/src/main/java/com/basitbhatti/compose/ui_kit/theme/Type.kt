@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui.library.ui.theme
+package com.basitbhatti.compose.library.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

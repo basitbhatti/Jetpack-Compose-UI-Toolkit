@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui.library.ui.screens
+package com.basitbhatti.compose.library.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.basitbhatti.compose.ui.library.ui.theme.AppTheme
+import com.basitbhatti.compose.library.ui.theme.AppTheme
 import com.basitbhatti.compose.ui_kit.alert.CustomIconAlert
 import com.basitbhatti.compose.ui_kit.alert.InputAlertDialog
 import com.basitbhatti.compose.ui_kit.alert.LongContentAlertDialog

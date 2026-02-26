@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui.library.navigation
+package com.basitbhatti.compose.library.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAlert

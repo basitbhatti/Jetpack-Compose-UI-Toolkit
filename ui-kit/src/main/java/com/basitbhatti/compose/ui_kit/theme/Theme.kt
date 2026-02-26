@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui.library.ui.theme
+package com.basitbhatti.compose.library.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

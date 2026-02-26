@@ -1,55 +1,45 @@
-package com.basitbhatti.compose.ui.library.ui.screens
+package com.basitbhatti.compose.library.ui.screens
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.basitbhatti.compose.ui.library.navigation.Screen
+import androidx.navigation.compose.rememberNavController
+import com.basitbhatti.compose.library.ui.theme.AppTheme
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp)
-                .height(60.dp)
-        ) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(15.dp)
+    ) {
 
-            OutlinedButton(
-                modifier = Modifier.weight(0.5f).padding(horizontal = 10.dp),
-                shape = RoundedCornerShape(5.dp),
-                onClick = {
-                    navController.navigate(Screen.AlertScreen.route)
-                }
-            ) {
-                Text("Alert Dialogs")
-            }
+        Text(text = "Compoe UI Kit")
 
-            OutlinedButton(
-                modifier = Modifier.weight(0.5f).padding(horizontal = 10.dp),
-                shape = RoundedCornerShape(5.dp),
-                onClick = {
-                    navController.navigate(Screen.OTPScreen.route)
-                }
-            ) {
-                Text("OTP View")
-            }
-
-        }
 
 
     }
+
+
+}
+
+
+@Preview
+@Composable
+private fun HomePrev() {
+
+    AppTheme {
+        HomeScreen(navController = rememberNavController())
+    }
+
 }
