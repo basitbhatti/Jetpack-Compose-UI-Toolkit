@@ -279,7 +279,7 @@ fun FeaturedContent(navController: NavController) {
                     .height(120.dp)
                     .weight(0.5f)
                     .clickable {
-                        navController.navigate(Screen.AlertScreen.route)
+
                     }, shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(
                     containerColor = Color.Transparent
                 ), elevation = CardDefaults.cardElevation(
@@ -327,7 +327,7 @@ fun FeaturedContent(navController: NavController) {
                     .height(120.dp)
                     .weight(0.5f)
                     .clickable {
-                        navController.navigate(Screen.OTPScreen.route)
+
                     }, shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(
                     containerColor = Color.Transparent
                 ), elevation = CardDefaults.cardElevation(
