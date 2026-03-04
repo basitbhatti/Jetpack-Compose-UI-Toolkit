@@ -21,10 +21,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.VertexMode
 import androidx.compose.ui.graphics.Vertices
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,9 +66,11 @@ fun CardVisual(
     name: String,
 ) {
 
+    val fontCC = FontFamily(
+        Font(R.font.cc, FontWeight.Normal)
+    )
+
     // Credit Card Visual
-
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -124,27 +130,29 @@ fun CardVisual(
 
 
             Image(
-                painter = painterResource(R.drawable.nfc),
-                "NFC",
+                painter = painterResource(R.drawable.ic_nfs),
+                contentDescription = "NFC",
+                colorFilter = ColorFilter.tint(Color.White),
                 modifier = Modifier
-                    .padding(10.dp)
                     .size(20.dp)
                     .align(Alignment.End),
             )
+
+            Spacer(Modifier.height(15.dp))
+
 
             Image(
                 painter = painterResource(R.drawable.chip), "Chip", modifier = Modifier.size(40.dp)
             )
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(15.dp))
 
             Text(
-                text = cardNumber,
-                style = MaterialTheme.typography.headlineMedium.copy(fontSize = 24.sp),
-                color = Color.White
+                text = cardNumber, fontFamily = fontCC, color = Color.White,
+                style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp)
             )
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(15.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth()
