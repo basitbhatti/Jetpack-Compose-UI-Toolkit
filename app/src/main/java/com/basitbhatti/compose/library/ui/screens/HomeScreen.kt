@@ -274,50 +274,68 @@ fun FeaturedContent(navController: NavController) {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
 
+
+
             Card(
                 modifier = Modifier
                     .height(120.dp)
                     .weight(0.5f)
                     .clickable {
-
-                    }, shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(
-                    containerColor = Color.Transparent
-                ), elevation = CardDefaults.cardElevation(
-                    defaultElevation = 0.dp
+                        navController.navigate(Screen.CreditCardScreen.route)
+                    }, shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(
+                    defaultElevation = 2.dp
                 )
             ) {
 
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .drawBehind {
-                            drawRoundRect(
-                                color = Color.Gray.copy(alpha = 0.8f),
-                                style = stroke,
-                                cornerRadius = CornerRadius(16.dp.toPx())
+                        .background(
+                            Brush.linearGradient(
+                                listOf(
+                                    Color(0xFF2774AE), Color(0xFF002e5d)
+                                )
                             )
-                        },
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        )
                 ) {
 
-                    Icon(
-                        painter = painterResource(R.drawable.ic_credit_card),
-                        contentDescription = "Credit Card Input",
-                        tint = Color.Gray.copy(alpha = 0.5f)
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
 
-                    Spacer(Modifier.height(10.dp))
+                        Icon(
+                            painter = painterResource(R.drawable.ic_credit_card),
+                            tint = Color.White,
+                            contentDescription = "Credit Card Input"
+                        )
+
+                        Spacer(Modifier.height(10.dp))
+
+                        Text(
+                            text = "Credit Card Input", style = MaterialTheme.typography.bodyMedium.copy(
+                                fontWeight = FontWeight.Bold, color = Color.White
+                            )
+                        )
+
+                    }
 
                     Text(
-                        text = "Credit Card Input",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            fontWeight = FontWeight.Bold, color = Color.Gray.copy(alpha = 0.5f)
-                        )
+                        text = "New",
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            fontSize = 12.sp
+                        ),
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(5.dp))
+                            .background(Color.White)
+                            .padding(horizontal = 4.dp, vertical = 2.dp)
+                            .align(Alignment.TopEnd)
+
                     )
 
                 }
-
             }
 
             Spacer(Modifier.width(15.dp))

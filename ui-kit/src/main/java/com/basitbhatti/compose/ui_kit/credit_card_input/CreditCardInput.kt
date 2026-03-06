@@ -1,5 +1,8 @@
 package com.basitbhatti.compose.ui_kit.credit_card_input
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,11 +18,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +38,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.VertexMode
 import androidx.compose.ui.graphics.Vertices
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -53,18 +63,18 @@ fun CreditCardInput(
     modifier: Modifier = Modifier
 ) {
 
+    var isFlipped by remember {
+        mutableStateOf(false)
+    }
+
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .fillMaxWidth()
             .padding(15.dp)
     ) {
 
         CardVisual(
-            cardNumber = cardNumber,
-            expiryDate = expiryDate,
-            cvv = cvv,
-            name = name
+            cardNumber = cardNumber, expiryDate = expiryDate, cvv = cvv, name = name, isFlipped = isFlipped
         )
 
         Spacer(Modifier.height(15.dp))
@@ -75,6 +85,12 @@ fun CreditCardInput(
 
         TextField(
             value = cardNumber.chunked(4).joinToString(" "),
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.cc_outlined),
+                    contentDescription = "Card Icon"
+                )
+            },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             onValueChange = {
                 onCardNumberChange(it)
@@ -113,11 +129,11 @@ fun CreditCardInput(
 
         Spacer(Modifier.height(15.dp))
 
-        Row (
+        Row(
             modifier = Modifier.fillMaxWidth()
         ) {
 
-            Column (
+            Column(
                 modifier = Modifier.weight(0.5f)
             ) {
                 Text(text = "Expiry Date", style = MaterialTheme.typography.labelLarge)
@@ -142,7 +158,7 @@ fun CreditCardInput(
 
             Spacer(modifier = Modifier.width(15.dp))
 
-            Column (
+            Column(
                 modifier = Modifier.weight(0.5f)
             ) {
                 Text(text = "CVV", style = MaterialTheme.typography.labelLarge)
@@ -167,9 +183,7 @@ fun CreditCardInput(
 
         }
 
-
     }
-
 
 }
 
@@ -179,6 +193,8 @@ private fun CCPrev() {
 
     AppTheme {
         CreditCardInput(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background),
             cardNumber = "123456789023456",
             expiryDate = "DD/MM",
             cvv = "CVV",
@@ -186,33 +202,116 @@ private fun CCPrev() {
             onCardNumberChange = {},
             onExpiryDateChange = {},
             onCvvChange = {},
-            onNameChange = {}
-        )
+            onNameChange = {})
     }
 }
 
 
 @Composable
 fun CardVisual(
-    cardNumber: String,
-    expiryDate: String,
-    cvv: String,
-    name: String,
-    isFlipped: Boolean = false
+    cardNumber: String, expiryDate: String, cvv: String, name: String, isFlipped: Boolean = false
 ) {
 
-    val fontCC = FontFamily(
-        Font(R.font.cc, FontWeight.Normal)
+    val rotation by animateFloatAsState(
+        targetValue = if (isFlipped) 180f else 0f,
+        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
+        label = "cardFlip"
     )
 
     // Credit Card Visual
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(240.dp)
+            .graphicsLayer(
+                rotationY = rotation,
+                cameraDistance = 12f * LocalDensity.current.density
+            )
+
+    ) {
+        if (rotation <= 90f) {
+            CardFront(cardNumber, expiryDate, name)
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .graphicsLayer {
+                        rotationY = 180f
+                    }
+            ) {
+                CardBack(cvv)
+            }
+        }
+
+    }
+}
+
+@Composable
+fun CardBack(cvv: String) {
+
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(240.dp)
-
     ) {
+
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(15.dp))
+        ) {
+
+            val w = size.width
+            val h = size.height
+
+            val points: List<Offset> = listOf(
+                Offset(0f, 0f),
+                Offset(w, 0f),
+                Offset(0f, h),
+                Offset(w, h),
+            )
+
+            val colors = listOf(
+                Color.Black,
+                Color.Black,
+                Color.Blue.copy(alpha = 0.8f),
+                Color.Magenta.copy(alpha = 0.5f)
+            )
+
+            val indices = listOf<Int>(
+                0, 2, 1, 1, 2, 3
+            )
+
+            drawContext.canvas.drawVertices(
+                vertices = Vertices(
+                    vertexMode = VertexMode.Triangles,
+                    positions = points,
+                    textureCoordinates = points,
+                    colors = colors,
+                    indices = indices
+                ), blendMode = BlendMode.Dst, paint = Paint()
+            )
+        }
+
+
+    }
+
+}
+
+@Composable
+fun CardFront(cardNumber: String, expiryDate: String, name: String) {
+
+    val fontCC = FontFamily(
+        Font(R.font.cc, FontWeight.Normal)
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(240.dp)
+    ) {
+
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
@@ -277,7 +376,9 @@ fun CardVisual(
             val formattedNumber = cardNumber.chunked(4).joinToString("  ")
 
             Text(
-                text = formattedNumber, fontFamily = fontCC, color = Color.White,
+                text = formattedNumber,
+                fontFamily = fontCC,
+                color = Color.White,
                 style = MaterialTheme.typography.titleMedium
             )
 
@@ -287,9 +388,7 @@ fun CardVisual(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = name,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
+                    text = name, style = MaterialTheme.typography.titleMedium, color = Color.White
                 )
 
                 Text(
@@ -310,7 +409,6 @@ fun CardVisual(
         }
 
     }
-
 }
 
 
@@ -321,10 +419,7 @@ private fun CardPrev() {
     AppTheme {
 
         CardVisual(
-            cardNumber = "4532310099991049",
-            expiryDate = "12/25",
-            cvv = "123",
-            name = "John Doe"
+            cardNumber = "4532310099991049", expiryDate = "12/25", cvv = "123", name = "John Doe"
         )
     }
 

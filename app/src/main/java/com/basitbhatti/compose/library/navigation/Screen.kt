@@ -10,6 +10,7 @@ sealed class Screen(
 ) {
     object HomeScreen : Screen("home_screen")
 
+    object CreditCardScreen : Screen("credit_card_screen")
     object AlertScreen : Screen("alert_screen")
 
     object OTPScreen : Screen("otp_screen")
