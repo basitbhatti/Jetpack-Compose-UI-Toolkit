@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -32,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.basitbhatti.compose.library.ui.theme.AppTheme
@@ -71,7 +74,8 @@ fun CreditCardInput(
         Spacer(Modifier.height(5.dp))
 
         TextField(
-            value = cardNumber,
+            value = cardNumber.chunked(4).joinToString(" "),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             onValueChange = {
                 onCardNumberChange(it)
             },
@@ -93,6 +97,7 @@ fun CreditCardInput(
 
         TextField(
             value = name,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             onValueChange = {
                 onNameChange(it)
             },
@@ -106,9 +111,59 @@ fun CreditCardInput(
             )
         )
 
-        Row (
+        Spacer(Modifier.height(15.dp))
 
+        Row (
+            modifier = Modifier.fillMaxWidth()
         ) {
+
+            Column (
+                modifier = Modifier.weight(0.5f)
+            ) {
+                Text(text = "Expiry Date", style = MaterialTheme.typography.labelLarge)
+
+                Spacer(Modifier.height(5.dp))
+
+                TextField(
+                    value = expiryDate,
+                    onValueChange = {
+                        onExpiryDateChange(it)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(15.dp),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.White,
+                        unfocusedContainerColor = Color.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.width(15.dp))
+
+            Column (
+                modifier = Modifier.weight(0.5f)
+            ) {
+                Text(text = "CVV", style = MaterialTheme.typography.labelLarge)
+
+                Spacer(Modifier.height(5.dp))
+
+                TextField(
+                    value = cvv,
+                    onValueChange = {
+                        onCvvChange(it)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(15.dp),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.White,
+                        unfocusedContainerColor = Color.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                    )
+                )
+            }
 
         }
 
@@ -124,7 +179,7 @@ private fun CCPrev() {
 
     AppTheme {
         CreditCardInput(
-            cardNumber = "0000000000000000",
+            cardNumber = "123456789023456",
             expiryDate = "DD/MM",
             cvv = "CVV",
             name = "John Doe",
@@ -242,7 +297,6 @@ fun CardVisual(
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.White
                 )
-
             }
 
             Image(
