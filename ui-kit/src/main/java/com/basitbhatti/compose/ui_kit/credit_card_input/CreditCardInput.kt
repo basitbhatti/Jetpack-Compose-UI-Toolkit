@@ -58,7 +58,8 @@ fun CreditCardInput(
             cvv = cvv,
             name = name
         )
-        
+
+
 
 
     }
@@ -70,9 +71,9 @@ fun CreditCardInput(
 @Composable
 private fun CCPrev() {
     CreditCardInput(
-        cardNumber = "4532  3100  9999  1049",
-        expiryDate = "12/28",
-        cvv = "123",
+        cardNumber = "0000000000000000",
+        expiryDate = "DD/MM",
+        cvv = "CVV",
         name = "John Doe",
         onCardNumberChange = {},
         onExpiryDateChange = {},
@@ -125,13 +126,6 @@ fun CardVisual(
                 Color.Magenta.copy(alpha = 0.5f)
             )
 
-//            val colors = listOf(
-//                Color.Black,
-//                Color.Black,
-//                Color(0xFFFED049).copy(0.5f),
-//                Color(0xFFF93232).copy(0.5f),
-//            )
-
             val indices = listOf<Int>(
                 0, 2, 1, 1, 2, 3
             )
@@ -150,54 +144,59 @@ fun CardVisual(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp),
+                .padding(15.dp),
         ) {
-
 
             Image(
                 painter = painterResource(R.drawable.ic_nfs),
                 contentDescription = "NFC",
                 colorFilter = ColorFilter.tint(Color.White),
                 modifier = Modifier
-                    .size(30.dp)
+                    .size(25.dp)
                     .align(Alignment.End),
             )
 
-            Spacer(Modifier.height(15.dp))
-
+            Spacer(Modifier.height(10.dp))
 
             Image(
                 painter = painterResource(R.drawable.chip), "Chip", modifier = Modifier.size(40.dp)
             )
 
-            Spacer(Modifier.height(15.dp))
+            Spacer(Modifier.height(10.dp))
+
+            val formattedNumber = cardNumber.chunked(4).joinToString("  ")
 
             Text(
-                text = cardNumber, fontFamily = fontCC, color = Color.White,
+                text = formattedNumber, fontFamily = fontCC, color = Color.White,
                 style = MaterialTheme.typography.headlineMedium.copy(fontSize = 18.sp)
             )
 
-            Spacer(Modifier.height(15.dp))
+            Spacer(Modifier.height(10.dp))
 
-            Row(
+            Column (
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = name,
-                    style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp),
+                    style = MaterialTheme.typography.headlineSmall.copy(fontSize = 16.sp),
                     color = Color.White
                 )
 
-                Spacer(Modifier.weight(1f))
-
                 Text(
                     text = expiryDate,
-                    style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp),
+                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp),
                     color = Color.White
                 )
 
             }
 
+            Image(
+                painter = painterResource(R.drawable.mastercard),
+                contentDescription = "CardType",
+                modifier = Modifier
+                    .size(30.dp)
+                    .align(Alignment.End),
+            )
 
         }
 
@@ -213,7 +212,7 @@ private fun CardPrev() {
     AppTheme {
 
         CardVisual(
-            cardNumber = "4532  3100  9999  1049",
+            cardNumber = "4532310099991049",
             expiryDate = "12/25",
             cvv = "123",
             name = "John Doe"
