@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui_kit
+package com.basitbhatti.compose.ui_kit.credit_card_input
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.basitbhatti.compose.library.ui.theme.AppTheme
+import com.basitbhatti.compose.ui_kit.R
 
 @Composable
 fun CreditCardInput(
@@ -48,13 +49,36 @@ fun CreditCardInput(
 ) {
 
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize().padding(15.dp)
     ) {
+
+        CardVisual(
+            cardNumber = cardNumber,
+            expiryDate = expiryDate,
+            cvv = cvv,
+            name = name
+        )
+        
 
 
     }
 
 
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CCPrev() {
+    CreditCardInput(
+        cardNumber = "4532  3100  9999  1049",
+        expiryDate = "12/28",
+        cvv = "123",
+        name = "John Doe",
+        onCardNumberChange = {},
+        onExpiryDateChange = {},
+        onCvvChange = {},
+        onNameChange = {}
+    )
 }
 
 
@@ -64,6 +88,7 @@ fun CardVisual(
     expiryDate: String,
     cvv: String,
     name: String,
+    isFlipped: Boolean = false
 ) {
 
     val fontCC = FontFamily(
@@ -134,7 +159,7 @@ fun CardVisual(
                 contentDescription = "NFC",
                 colorFilter = ColorFilter.tint(Color.White),
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(30.dp)
                     .align(Alignment.End),
             )
 
@@ -149,7 +174,7 @@ fun CardVisual(
 
             Text(
                 text = cardNumber, fontFamily = fontCC, color = Color.White,
-                style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp)
+                style = MaterialTheme.typography.headlineMedium.copy(fontSize = 18.sp)
             )
 
             Spacer(Modifier.height(15.dp))
