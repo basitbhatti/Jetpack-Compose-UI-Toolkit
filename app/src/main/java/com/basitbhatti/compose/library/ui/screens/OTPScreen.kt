@@ -27,9 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.basitbhatti.compose.ui_kit.otp.OTPTextFieldFilled
-import com.basitbhatti.compose.ui_kit.otp.OTPTextFieldOutlined
-import com.basitbhatti.compose.ui_kit.otp.OTPTextFieldUnderlined
+import com.basitbhatti.compose.ui_kit.OTPView.OTPTextFieldFilled
+import com.basitbhatti.compose.ui_kit.OTPView.OTPTextFieldOutlined
+import com.basitbhatti.compose.ui_kit.OTPView.OTPTextFieldUnderlined
 
 @Composable
 fun OTPScreen(

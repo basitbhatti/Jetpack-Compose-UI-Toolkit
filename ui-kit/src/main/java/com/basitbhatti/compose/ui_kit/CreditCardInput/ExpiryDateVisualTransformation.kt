@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui_kit.credit_card_input
+package com.basitbhatti.compose.ui_kit.CreditCardInput
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping

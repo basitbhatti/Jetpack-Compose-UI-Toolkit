@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.MaterialTheme
@@ -29,7 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.basitbhatti.compose.ui_kit.credit_card_input.CreditCardInput
+import com.basitbhatti.compose.ui_kit.CreditCardInput.CreditCardInput
 
 @Composable
 fun CreditCardScreen(
@@ -144,7 +147,6 @@ fun CreditCardScreen(
 
             }
 
-
         }
 
 
@@ -167,7 +169,37 @@ fun CreditCardScreen(
             }
         )
 
+        Spacer(Modifier.weight(1f))
+
+
+        Button(
+            onClick = {},
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth()
+                .height(60.dp),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 5.dp
+            ),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor =
+                    MaterialTheme.colorScheme.scrim
+
+            )
+        ) {
+
+            Text(
+                text = "Pay Now",
+                style = MaterialTheme.typography.titleMedium,
+                color = Color.White
+            )
+
+        }
+
+
     }
+
 
 
 }

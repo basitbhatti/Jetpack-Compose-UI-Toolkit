@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalLayoutApi::class)
 
-package com.basitbhatti.compose.ui_kit.alert
+package com.basitbhatti.compose.ui_kit.AlertDialog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

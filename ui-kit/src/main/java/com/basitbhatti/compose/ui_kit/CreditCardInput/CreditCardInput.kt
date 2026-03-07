@@ -1,4 +1,4 @@
-package com.basitbhatti.compose.ui_kit.credit_card_input
+package com.basitbhatti.compose.ui_kit.CreditCardInput
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,13 +42,18 @@ import androidx.compose.ui.graphics.VertexMode
 import androidx.compose.ui.graphics.Vertices
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.basitbhatti.compose.library.ui.theme.AppTheme
 import com.basitbhatti.compose.ui_kit.R
 
@@ -67,6 +73,9 @@ fun CreditCardInput(
     var isFlipped by remember {
         mutableStateOf(false)
     }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
@@ -97,7 +106,7 @@ fun CreditCardInput(
                 )
             },
             placeholder = {
-                Text("1234567890123456")
+                Text("1234  5678  9012  3456")
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             onValueChange = { newValue ->
@@ -132,6 +141,7 @@ fun CreditCardInput(
             placeholder = {
                 Text("John Doe")
             },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(15.dp),
             colors = TextFieldDefaults.colors(
@@ -171,6 +181,7 @@ fun CreditCardInput(
                     placeholder = {
                         Text("MM / YY")
                     },
+                    singleLine = true,
                     visualTransformation = ExpiryDateVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
@@ -202,12 +213,19 @@ fun CreditCardInput(
                     placeholder = {
                         Text("123")
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
                     modifier = Modifier
                         .fillMaxWidth()
                         .onFocusChanged { focusState ->
                             isFlipped = focusState.isFocused
                         },
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                            isFlipped = false
+                            focusManager.clearFocus()
+                        }
+                    ),
                     shape = RoundedCornerShape(15.dp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
@@ -308,9 +326,9 @@ fun CardBack(cvv: String) {
 
             val colors = listOf(
                 Color.Black,
-                Color.Black,
-                Color.Magenta.copy(alpha = 0.8f),
-                Color.Blue.copy(alpha = 0.4f),
+                Color.Blue.copy(alpha = 0.2f),
+                Color.Magenta.copy(alpha = 0.5f),
+                Color.Blue.copy(alpha = 0.5f),
 
             )
 
@@ -327,6 +345,27 @@ fun CardBack(cvv: String) {
                     indices = indices
                 ), blendMode = BlendMode.Dst, paint = Paint()
             )
+        }
+
+        Column (
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            Spacer(Modifier.height(30.dp))
+
+            Box(
+                modifier = Modifier.fillMaxWidth().height(60.dp).background(Color.Black)
+            )
+
+            Spacer(Modifier.height(20.dp))
+
+            Box(
+                modifier = Modifier.fillMaxWidth().height(40.dp).background(Color.White),
+                contentAlignment = Alignment.CenterEnd
+            ){
+                Text(cvv, style = MaterialTheme.typography.titleMedium, fontStyle = FontStyle.Italic, color = Color.Black, modifier = Modifier.padding(end = 15.dp))
+            }
+
+
         }
 
 
@@ -414,7 +453,7 @@ fun CardFront(cardNumber: String, expiryDate: String, name: String) {
                 text = formattedNumber,
                 fontFamily = fontCC,
                 color = Color.White,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp)
             )
 
             Spacer(Modifier.height(15.dp))
@@ -453,13 +492,20 @@ fun formatExpiryForDisplay(expiryDigits: String): String {
 
 @Preview()
 @Composable
-private fun CardPrev() {
-
+private fun CardFrontPrev() {
     AppTheme {
-
-        CardVisual(
-            cardNumber = "4532310099991049", expiryDate = "12/25", cvv = "123", name = "John Doe"
+        CardFront(
+            cardNumber = "4532310099991049", expiryDate = "12/25", name = "John Doe"
         )
+    }
+
+}
+
+@Preview()
+@Composable
+private fun CardBackPrev() {
+    AppTheme {
+        CardBack("123")
     }
 
 }
