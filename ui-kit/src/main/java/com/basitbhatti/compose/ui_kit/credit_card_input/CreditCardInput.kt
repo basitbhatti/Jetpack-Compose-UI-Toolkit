@@ -91,6 +91,9 @@ fun CreditCardInput(
                     contentDescription = "Card Icon"
                 )
             },
+            placeholder = {
+                Text("1234567890123456")
+            },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             onValueChange = {
                 onCardNumberChange(it)
@@ -116,6 +119,9 @@ fun CreditCardInput(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             onValueChange = {
                 onNameChange(it)
+            },
+            placeholder = {
+                Text("John Doe")
             },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(15.dp),
@@ -145,6 +151,9 @@ fun CreditCardInput(
                     onValueChange = {
                         onExpiryDateChange(it)
                     },
+                    placeholder = {
+                        Text("DD/MM")
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(15.dp),
                     colors = TextFieldDefaults.colors(
@@ -169,6 +178,9 @@ fun CreditCardInput(
                     value = cvv,
                     onValueChange = {
                         onCvvChange(it)
+                    },
+                    placeholder = {
+                        Text("CVV")
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(15.dp),
@@ -195,7 +207,7 @@ private fun CCPrev() {
         CreditCardInput(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background),
-            cardNumber = "123456789023456",
+            cardNumber = "1234567890123456",
             expiryDate = "DD/MM",
             cvv = "CVV",
             name = "John Doe",
