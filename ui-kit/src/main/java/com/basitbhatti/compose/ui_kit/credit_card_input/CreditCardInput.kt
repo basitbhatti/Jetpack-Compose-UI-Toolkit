@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
@@ -70,11 +71,15 @@ fun CreditCardInput(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(15.dp)
+            .padding(20.dp)
     ) {
 
         CardVisual(
-            cardNumber = cardNumber, expiryDate = expiryDate, cvv = cvv, name = name, isFlipped = isFlipped
+            cardNumber = cardNumber,
+            expiryDate = expiryDate,
+            cvv = cvv,
+            name = name,
+            isFlipped = isFlipped
         )
 
         Spacer(Modifier.height(15.dp))
@@ -84,7 +89,7 @@ fun CreditCardInput(
         Spacer(Modifier.height(5.dp))
 
         TextField(
-            value = cardNumber.chunked(4).joinToString(" "),
+            value = cardNumber,
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.cc_outlined),
@@ -95,9 +100,13 @@ fun CreditCardInput(
                 Text("1234567890123456")
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            onValueChange = {
-                onCardNumberChange(it)
+            onValueChange = { newValue ->
+                val digitsOnly = newValue.filter { it.isDigit() }.take(16)
+                onCardNumberChange(digitsOnly)
             },
+            singleLine = true,
+            maxLines = 1,
+            visualTransformation = CreditCardVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(15.dp),
             colors = TextFieldDefaults.colors(
@@ -148,12 +157,22 @@ fun CreditCardInput(
 
                 TextField(
                     value = expiryDate,
-                    onValueChange = {
-                        onExpiryDateChange(it)
+                    onValueChange = { newValue ->
+                        val digits = newValue.filter { it.isDigit() }.take(4)
+                        if (digits.length == 2) {
+                            val month = digits.toIntOrNull() ?: 0
+                            if (month in 1..12) {
+                                onExpiryDateChange(digits)
+                            }
+                        } else {
+                            onExpiryDateChange(digits)
+                        }
                     },
                     placeholder = {
-                        Text("DD/MM")
+                        Text("MM / YY")
                     },
+                    visualTransformation = ExpiryDateVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(15.dp),
                     colors = TextFieldDefaults.colors(
@@ -176,13 +195,19 @@ fun CreditCardInput(
 
                 TextField(
                     value = cvv,
-                    onValueChange = {
-                        onCvvChange(it)
+                    onValueChange = { newValue ->
+                        val digits = newValue.filter { it.isDigit() }.take(4)
+                        onCvvChange(digits)
                     },
                     placeholder = {
-                        Text("CVV")
+                        Text("123")
                     },
-                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .onFocusChanged { focusState ->
+                            isFlipped = focusState.isFocused
+                        },
                     shape = RoundedCornerShape(15.dp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
@@ -205,10 +230,9 @@ private fun CCPrev() {
 
     AppTheme {
         CreditCardInput(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background),
+            modifier = Modifier.background(MaterialTheme.colorScheme.background),
             cardNumber = "1234567890123456",
-            expiryDate = "DD/MM",
+            expiryDate = "MM/YY",
             cvv = "CVV",
             name = "John Doe",
             onCardNumberChange = {},
@@ -226,7 +250,7 @@ fun CardVisual(
 
     val rotation by animateFloatAsState(
         targetValue = if (isFlipped) 180f else 0f,
-        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
+        animationSpec = tween(durationMillis = 1000, easing = FastOutSlowInEasing),
         label = "cardFlip"
     )
 
@@ -236,8 +260,7 @@ fun CardVisual(
             .fillMaxWidth()
             .height(240.dp)
             .graphicsLayer(
-                rotationY = rotation,
-                cameraDistance = 12f * LocalDensity.current.density
+                rotationY = rotation, cameraDistance = 12f * LocalDensity.current.density
             )
 
     ) {
@@ -249,8 +272,7 @@ fun CardVisual(
                     .fillMaxSize()
                     .graphicsLayer {
                         rotationY = 180f
-                    }
-            ) {
+                    }) {
                 CardBack(cvv)
             }
         }
@@ -287,8 +309,9 @@ fun CardBack(cvv: String) {
             val colors = listOf(
                 Color.Black,
                 Color.Black,
-                Color.Blue.copy(alpha = 0.8f),
-                Color.Magenta.copy(alpha = 0.5f)
+                Color.Magenta.copy(alpha = 0.8f),
+                Color.Blue.copy(alpha = 0.4f),
+
             )
 
             val indices = listOf<Int>(
@@ -377,7 +400,7 @@ fun CardFront(cardNumber: String, expiryDate: String, name: String) {
                     .align(Alignment.End),
             )
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(20.dp))
 
             Image(
                 painter = painterResource(R.drawable.chip), "Chip", modifier = Modifier.size(40.dp)
@@ -391,7 +414,7 @@ fun CardFront(cardNumber: String, expiryDate: String, name: String) {
                 text = formattedNumber,
                 fontFamily = fontCC,
                 color = Color.White,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleLarge
             )
 
             Spacer(Modifier.height(15.dp))
@@ -404,7 +427,7 @@ fun CardFront(cardNumber: String, expiryDate: String, name: String) {
                 )
 
                 Text(
-                    text = expiryDate,
+                    text = formatExpiryForDisplay(expiryDate),
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.White
                 )
@@ -423,6 +446,10 @@ fun CardFront(cardNumber: String, expiryDate: String, name: String) {
     }
 }
 
+fun formatExpiryForDisplay(expiryDigits: String): String {
+    if (expiryDigits.length <= 2) return expiryDigits
+    return "${expiryDigits.take(2)} / ${expiryDigits.drop(2)}"
+}
 
 @Preview()
 @Composable
