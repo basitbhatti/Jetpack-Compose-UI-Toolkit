@@ -6,15 +6,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -36,7 +42,6 @@ import com.basitbhatti.compose.ui_kit.CreditCardInput.CreditCardInput
 
 @Composable
 fun CreditCardScreen(
-    navController: NavController,
     modifier: Modifier = Modifier
 ) {
 
@@ -56,99 +61,15 @@ fun CreditCardScreen(
         mutableStateOf("")
     }
 
-
     Column(
         modifier = modifier
             .fillMaxSize()
-            .systemBarsPadding()
+            .windowInsetsPadding(WindowInsets.safeDrawing)
+            .imePadding()
+            .verticalScroll(rememberScrollState())
     ) {
 
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(70.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-
-            Row(
-                modifier = Modifier.weight(1f),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-
-                Box(
-                    modifier
-                        .padding(end = 10.dp)
-                        .size(30.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.scrim),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Checkbox(
-                        checked = true,
-                        modifier = Modifier.clip(CircleShape),
-                        colors = CheckboxDefaults.colors(
-                            checkedColor = Color.Transparent
-                        ),
-                        onCheckedChange = {}
-                    )
-                }
-
-                Text("Order", style = MaterialTheme.typography.titleMedium)
-
-            }
-
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-
-                Box(
-                    modifier
-                        .padding(end = 10.dp)
-                        .size(30.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.scrim),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Checkbox(
-                        checked = true,
-                        modifier = Modifier.clip(CircleShape),
-                        colors = CheckboxDefaults.colors(
-                            checkedColor = Color.Transparent
-                        ),
-                        onCheckedChange = {}
-                    )
-                }
-
-                Text("Address", style = MaterialTheme.typography.titleMedium)
-
-            }
-
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .padding(horizontal = 10.dp, vertical = 15.dp)
-                    .clip(RoundedCornerShape(15.dp))
-                    .background(
-                        MaterialTheme.colorScheme.scrim
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-
-                Text("Payment", style = MaterialTheme.typography.titleMedium, color = Color.White)
-
-            }
-
-        }
-
+        HeaderContent()
 
         CreditCardInput(
             cardNumber = cardNumber,
@@ -171,7 +92,6 @@ fun CreditCardScreen(
 
         Spacer(Modifier.weight(1f))
 
-
         Button(
             onClick = {},
             modifier = Modifier
@@ -188,18 +108,100 @@ fun CreditCardScreen(
 
             )
         ) {
-
             Text(
                 text = "Pay Now",
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.White
             )
-
         }
-
 
     }
 
+}
 
+@Composable
+fun HeaderContent() {
 
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+
+        Row(
+            modifier = Modifier.weight(1f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+
+            Box(
+                Modifier
+                    .padding(end = 10.dp)
+                    .size(30.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.scrim),
+                contentAlignment = Alignment.Center
+            ) {
+                Checkbox(
+                    checked = true,
+                    modifier = Modifier.clip(CircleShape),
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color.Transparent
+                    ),
+                    onCheckedChange = {}
+                )
+            }
+
+            Text("Order", style = MaterialTheme.typography.titleMedium)
+
+        }
+
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 15.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+
+            Box(
+                Modifier
+                    .padding(end = 10.dp)
+                    .size(30.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.scrim),
+                contentAlignment = Alignment.Center
+            ) {
+                Checkbox(
+                    checked = true,
+                    modifier = Modifier.clip(CircleShape),
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color.Transparent
+                    ),
+                    onCheckedChange = {}
+                )
+            }
+
+            Text("Address", style = MaterialTheme.typography.titleMedium)
+
+        }
+
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .padding(horizontal = 10.dp, vertical = 15.dp)
+                .clip(RoundedCornerShape(15.dp))
+                .background(
+                    MaterialTheme.colorScheme.scrim
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text("Payment", style = MaterialTheme.typography.titleMedium, color = Color.White)
+        }
+
+    }
 }

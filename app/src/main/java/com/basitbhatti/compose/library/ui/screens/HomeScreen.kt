@@ -7,13 +7,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,14 +41,11 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.basitbhatti.compose.library.R
 import com.basitbhatti.compose.library.navigation.Screen
-import com.basitbhatti.compose.library.ui.theme.AppTheme
 
 @Composable
 fun HomeScreen(
@@ -59,8 +58,8 @@ fun HomeScreen(
 
     Column(
         modifier = Modifier
-            .systemBarsPadding()
             .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeDrawing)
             .background(MaterialTheme.colorScheme.background)
             .padding(15.dp)
     ) {
@@ -108,7 +107,6 @@ fun HomeScreen(
 
     }
 
-
 }
 
 @Composable
@@ -120,7 +118,6 @@ fun FeaturedContent(navController: NavController) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-
 
         Text(
             text = "Featured", style = MaterialTheme.typography.bodyLarge.copy(
@@ -182,20 +179,6 @@ fun FeaturedContent(navController: NavController) {
 
                     }
 
-                    Text(
-                        text = "New",
-                        style = MaterialTheme.typography.bodySmall.copy(
-                           fontSize = 12.sp
-                        ),
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(5.dp))
-                            .background(Color.White)
-                            .padding(horizontal = 4.dp, vertical = 2.dp)
-                            .align(Alignment.TopEnd)
-
-                    )
-
                 }
             }
 
@@ -246,20 +229,6 @@ fun FeaturedContent(navController: NavController) {
 
                     }
 
-                    Text(
-                        text = "New",
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            fontSize = 12.sp
-                        ),
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(5.dp))
-                            .background(Color.White)
-                            .padding(horizontal = 4.dp, vertical = 2.dp)
-                            .align(Alignment.TopEnd)
-
-                    )
-
                 }
             }
 
@@ -273,7 +242,6 @@ fun FeaturedContent(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-
 
 
             Card(
@@ -314,7 +282,8 @@ fun FeaturedContent(navController: NavController) {
                         Spacer(Modifier.height(10.dp))
 
                         Text(
-                            text = "Credit Card Input", style = MaterialTheme.typography.bodyMedium.copy(
+                            text = "Credit Card Input",
+                            style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold, color = Color.White
                             )
                         )

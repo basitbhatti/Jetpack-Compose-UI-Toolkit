@@ -23,7 +23,7 @@ fun NavGraph(controller: NavHostController) {
         }
 
         composable(Screen.CreditCardScreen.route) {
-            CreditCardScreen(controller)
+            CreditCardScreen()
         }
 
         composable(Screen.OTPScreen.route) {

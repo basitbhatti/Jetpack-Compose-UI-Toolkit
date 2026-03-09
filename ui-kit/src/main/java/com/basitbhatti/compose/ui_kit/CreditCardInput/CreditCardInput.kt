@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -77,6 +76,9 @@ fun CreditCardInput(
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
+    val cardType = detectCardType(cardNumber)
+
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -84,6 +86,7 @@ fun CreditCardInput(
     ) {
 
         CardVisual(
+            cardType = cardType,
             cardNumber = cardNumber,
             expiryDate = expiryDate,
             cvv = cvv,
@@ -100,8 +103,9 @@ fun CreditCardInput(
         TextField(
             value = cardNumber,
             leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.cc_outlined),
+                Image(
+                    modifier = Modifier.size(25.dp),
+                    painter = painterResource(cardType.iconResId),
                     contentDescription = "Card Icon"
                 )
             },
@@ -205,35 +209,30 @@ fun CreditCardInput(
                 Spacer(Modifier.height(5.dp))
 
                 TextField(
-                    value = cvv,
-                    onValueChange = { newValue ->
-                        val digits = newValue.filter { it.isDigit() }.take(4)
-                        onCvvChange(digits)
-                    },
-                    placeholder = {
-                        Text("123")
-                    },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
-                    modifier = Modifier
+                    value = cvv, onValueChange = { newValue ->
+                    val digits = newValue.filter { it.isDigit() }.take(4)
+                    onCvvChange(digits)
+                }, placeholder = {
+                    Text("123")
+                }, keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
+                ), modifier = Modifier
                         .fillMaxWidth()
                         .onFocusChanged { focusState ->
-                            isFlipped = focusState.isFocused
-                        },
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            isFlipped = false
-                            focusManager.clearFocus()
-                        }
-                    ),
-                    shape = RoundedCornerShape(15.dp),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.White,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                    )
-                )
+                            if (cardType != CardType.AMERICAN_EXPRESS) {
+                                isFlipped = focusState.isFocused
+                            }
+                        }, keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        isFlipped = false
+                        focusManager.clearFocus()
+                    }), shape = RoundedCornerShape(15.dp), colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                ))
             }
 
         }
@@ -263,7 +262,12 @@ private fun CCPrev() {
 
 @Composable
 fun CardVisual(
-    cardNumber: String, expiryDate: String, cvv: String, name: String, isFlipped: Boolean = false
+    cardNumber: String,
+    cardType: CardType,
+    expiryDate: String,
+    cvv: String,
+    name: String,
+    isFlipped: Boolean = false
 ) {
 
     val rotation by animateFloatAsState(
@@ -283,8 +287,8 @@ fun CardVisual(
 
     ) {
         if (rotation <= 90f) {
-            CardFront(cardNumber, expiryDate, name)
-        } else {
+            CardFront(cardNumber, expiryDate, name, cvv, cardType)
+        } else if (cardType != CardType.AMERICAN_EXPRESS) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -330,7 +334,7 @@ fun CardBack(cvv: String) {
                 Color.Magenta.copy(alpha = 0.5f),
                 Color.Blue.copy(alpha = 0.5f),
 
-            )
+                )
 
             val indices = listOf<Int>(
                 0, 2, 1, 1, 2, 3
@@ -347,22 +351,34 @@ fun CardBack(cvv: String) {
             )
         }
 
-        Column (
+        Column(
             modifier = Modifier.fillMaxSize(),
         ) {
             Spacer(Modifier.height(30.dp))
 
             Box(
-                modifier = Modifier.fillMaxWidth().height(60.dp).background(Color.Black)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .background(Color.Black)
             )
 
             Spacer(Modifier.height(20.dp))
 
             Box(
-                modifier = Modifier.fillMaxWidth().height(40.dp).background(Color.White),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .background(Color.White),
                 contentAlignment = Alignment.CenterEnd
-            ){
-                Text(cvv, style = MaterialTheme.typography.titleMedium, fontStyle = FontStyle.Italic, color = Color.Black, modifier = Modifier.padding(end = 15.dp))
+            ) {
+                Text(
+                    cvv,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontStyle = FontStyle.Italic,
+                    color = Color.Black,
+                    modifier = Modifier.padding(end = 15.dp)
+                )
             }
 
 
@@ -374,7 +390,9 @@ fun CardBack(cvv: String) {
 }
 
 @Composable
-fun CardFront(cardNumber: String, expiryDate: String, name: String) {
+fun CardFront(
+    cardNumber: String, expiryDate: String, name: String, cvv: String, cardType: CardType
+) {
 
     val fontCC = FontFamily(
         Font(R.font.cc, FontWeight.Normal)
@@ -458,30 +476,80 @@ fun CardFront(cardNumber: String, expiryDate: String, name: String) {
 
             Spacer(Modifier.height(15.dp))
 
-            Column(
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(
-                    text = name, style = MaterialTheme.typography.titleMedium, color = Color.White
-                )
+                Column {
+                    Text(
+                        text = name,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White
+                    )
 
-                Text(
-                    text = formatExpiryForDisplay(expiryDate),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.White
+                    Text(
+                        text = formatExpiryForDisplay(expiryDate),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.White
+                    )
+                }
+
+                if (cardType == CardType.AMERICAN_EXPRESS) {
+                    Spacer(Modifier.weight(1f))
+
+                    Text(
+                        text = cvv,
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.White
+                    )
+
+                }
+            }
+
+
+            if (cardType != CardType.UNKNOWN) {
+                Image(
+                    painter = painterResource(cardType.iconResId),
+                    contentDescription = "CardType",
+                    modifier = Modifier
+                        .size(30.dp)
+                        .align(Alignment.End),
                 )
             }
 
-            Image(
-                painter = painterResource(R.drawable.mastercard),
-                contentDescription = "CardType",
-                modifier = Modifier
-                    .size(30.dp)
-                    .align(Alignment.End),
-            )
 
         }
 
+    }
+}
+
+fun detectCardType(cardNumber: String?): CardType {
+    if (cardNumber.isNullOrBlank()) {
+        return CardType.UNKNOWN
+    }
+
+    // Remove all non-digits
+    val cleaned = cardNumber.replace("[^0-9]".toRegex(), "")
+
+    if (cleaned.length < 6) {
+        return CardType.UNKNOWN
+    }
+
+    val firstDigit = cleaned[0]
+    val firstTwo = cleaned.substring(0, 2).toIntOrNull() ?: 0
+    val firstFour = cleaned.substring(0, 4).toIntOrNull() ?: 0
+
+    return when {
+        // Visa: starts with 4 (length usually 13 or 16)
+        firstDigit == '4' -> CardType.VISA
+
+        // Mastercard: 51–55 or 222100–272099 (updated ranges)
+        firstTwo in 51..55 || firstFour in 2221..2720 -> CardType.MASTERCARD
+
+        // American Express: starts with 34 or 37
+        firstTwo == 34 || firstTwo == 37 -> CardType.AMERICAN_EXPRESS
+
+        else -> CardType.UNKNOWN
     }
 }
 
@@ -495,7 +563,11 @@ fun formatExpiryForDisplay(expiryDigits: String): String {
 private fun CardFrontPrev() {
     AppTheme {
         CardFront(
-            cardNumber = "4532310099991049", expiryDate = "12/25", name = "John Doe"
+            cardNumber = "4532310099991049",
+            expiryDate = "12/25",
+            name = "John Doe",
+            "123",
+            CardType.VISA
         )
     }
 
