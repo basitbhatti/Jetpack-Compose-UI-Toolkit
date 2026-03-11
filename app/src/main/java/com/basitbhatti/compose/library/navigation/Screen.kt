@@ -12,8 +12,8 @@ sealed class Screen(
 
     object CreditCardScreen : Screen("credit_card_screen")
     object AlertScreen : Screen("alert_screen")
-
     object OTPScreen : Screen("otp_screen")
+    object ExpandableCardScreen : Screen("expandable_card_screen")
 
 
 }

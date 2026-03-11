@@ -8,6 +8,7 @@ import com.basitbhatti.compose.library.ui.screens.HomeScreen
 import com.basitbhatti.compose.library.ui.screens.OTPScreen
 import com.basitbhatti.compose.library.ui.screens.AlertScreen
 import com.basitbhatti.compose.library.ui.screens.CreditCardScreen
+import com.basitbhatti.compose.library.ui.screens.ExpandableCardScreen
 
 @Composable
 fun NavGraph(controller: NavHostController) {
@@ -28,6 +29,10 @@ fun NavGraph(controller: NavHostController) {
 
         composable(Screen.OTPScreen.route) {
             OTPScreen(controller)
+        }
+
+        composable(Screen.ExpandableCardScreen.route) {
+            ExpandableCardScreen()
         }
 
     }

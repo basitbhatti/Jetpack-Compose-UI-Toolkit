@@ -1,5 +1,6 @@
 package com.basitbhatti.compose.library.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,6 +47,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.basitbhatti.compose.library.R
 import com.basitbhatti.compose.library.navigation.Screen
+import com.basitbhatti.compose.ui_kit.ExpandableCard.ExpandableCard
+import kotlin.math.exp
 
 @Composable
 fun HomeScreen(
@@ -55,6 +58,8 @@ fun HomeScreen(
     var searchValue by remember {
         mutableStateOf("")
     }
+
+
 
     Column(
         modifier = Modifier
@@ -104,6 +109,8 @@ fun HomeScreen(
         FeaturedContent(
             navController = navController
         )
+
+
 
     }
 
@@ -314,40 +321,59 @@ fun FeaturedContent(navController: NavController) {
                     .height(120.dp)
                     .weight(0.5f)
                     .clickable {
-
-                    }, shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(
-                    containerColor = Color.Transparent
-                ), elevation = CardDefaults.cardElevation(
-                    defaultElevation = 0.dp
+                        navController.navigate(Screen.ExpandableCardScreen.route)
+                    }, shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(
+                    defaultElevation = 2.dp
                 )
             ) {
 
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .drawBehind {
-                            drawRoundRect(
-                                color = Color.Gray.copy(alpha = 0.8f),
-                                style = stroke,
-                                cornerRadius = CornerRadius(16.dp.toPx())
+                        .background(
+                            Brush.linearGradient(
+                                listOf(
+                                    Color(0xFF2774AE), Color(0xFF002e5d)
+                                )
                             )
-                        },
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        )
                 ) {
 
-                    Icon(
-                        painter = painterResource(R.drawable.ic_cards),
-                        tint = Color.Gray.copy(alpha = 0.5f),
-                        contentDescription = "Expandable Cards"
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
 
-                    Spacer(Modifier.height(10.dp))
+                        Icon(
+                            painter = painterResource(R.drawable.ic_cards),
+                            tint = Color.White,
+                            contentDescription = "Expandable Cards"
+                        )
+
+                        Spacer(Modifier.height(10.dp))
+
+                        Text(
+                            text = "Expandable Cards",
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                fontWeight = FontWeight.Bold, color = Color.White
+                            )
+                        )
+
+                    }
 
                     Text(
-                        text = "Expandable Cards", style = MaterialTheme.typography.bodyMedium.copy(
-                            fontWeight = FontWeight.Bold, color = Color.Gray.copy(alpha = 0.5f)
-                        )
+                        text = "New",
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            fontSize = 12.sp
+                        ),
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(5.dp))
+                            .background(Color.White)
+                            .padding(horizontal = 4.dp, vertical = 2.dp)
+                            .align(Alignment.TopEnd)
+
                     )
 
                 }
