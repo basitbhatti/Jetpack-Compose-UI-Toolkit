@@ -526,7 +526,6 @@ fun detectCardType(cardNumber: String?): CardType {
         return CardType.UNKNOWN
     }
 
-    // Remove all non-digits
     val cleaned = cardNumber.replace("[^0-9]".toRegex(), "")
 
     if (cleaned.length < 6) {
@@ -538,13 +537,10 @@ fun detectCardType(cardNumber: String?): CardType {
     val firstFour = cleaned.substring(0, 4).toIntOrNull() ?: 0
 
     return when {
-        // Visa: starts with 4 (length usually 13 or 16)
         firstDigit == '4' -> CardType.VISA
 
-        // Mastercard: 51–55 or 222100–272099 (updated ranges)
         firstTwo in 51..55 || firstFour in 2221..2720 -> CardType.MASTERCARD
 
-        // American Express: starts with 34 or 37
         firstTwo == 34 || firstTwo == 37 -> CardType.AMERICAN_EXPRESS
 
         else -> CardType.UNKNOWN

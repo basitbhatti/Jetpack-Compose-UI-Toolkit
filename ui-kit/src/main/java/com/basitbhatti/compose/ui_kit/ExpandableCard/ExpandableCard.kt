@@ -68,7 +68,7 @@ fun ExpandableCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 60.dp)
+                .heightIn(min = 80.dp)
                 .toggleable(
                     value = expanded,
                     onValueChange = { onExpandChange() },
@@ -97,10 +97,6 @@ fun ExpandableCard(
                         .rotate(if (rotateIcon) rotation else 0f)
                 )
             }
-
-
-
-
 
         }
 
