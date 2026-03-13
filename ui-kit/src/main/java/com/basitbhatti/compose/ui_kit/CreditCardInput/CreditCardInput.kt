@@ -274,7 +274,6 @@ fun CardVisual(
         label = "cardFlip"
     )
 
-    // Credit Card Visual
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -292,7 +291,8 @@ fun CardVisual(
                     .fillMaxSize()
                     .graphicsLayer {
                         rotationY = 180f
-                    }) {
+                    }
+            ) {
                 CardBack(cvv)
             }
         }

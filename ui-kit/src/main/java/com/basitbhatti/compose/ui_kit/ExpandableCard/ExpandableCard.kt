@@ -2,6 +2,7 @@ package com.basitbhatti.compose.ui_kit.ExpandableCard
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
@@ -31,6 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 
@@ -56,10 +59,23 @@ fun ExpandableCard(
         )
     )
 
+    val rotationX by animateFloatAsState(
+        targetValue = if (expanded) -5f else 0f,
+        animationSpec = tween(
+            durationMillis = 250,
+            easing = LinearEasing
+        )
+    )
+
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .animateContentSize(),
+            .animateContentSize()
+            .graphicsLayer(
+                rotationX = rotationX,
+                cameraDistance = 15 * LocalDensity.current.density,
+            ),
+        shape = RoundedCornerShape(radius),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         )
@@ -68,7 +84,7 @@ fun ExpandableCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 80.dp)
+                .heightIn(min = 70.dp)
                 .toggleable(
                     value = expanded,
                     onValueChange = { onExpandChange() },
@@ -114,7 +130,7 @@ fun ExpandableCard(
         ) {
 
             Box(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().graphicsLayer(alpha = 0.8f)
             ) {
                 content()
             }
