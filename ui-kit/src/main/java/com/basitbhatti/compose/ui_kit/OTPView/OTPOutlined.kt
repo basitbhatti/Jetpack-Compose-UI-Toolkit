@@ -140,7 +140,7 @@ fun OTPCellOutlined(
             Box(
                 modifier = Modifier
                     .width(1.dp)
-                    .height(15.dp)
+                    .height(16.dp)
                     .background(Color.Black.copy(alpha = cursorAlpha))
             )
         }

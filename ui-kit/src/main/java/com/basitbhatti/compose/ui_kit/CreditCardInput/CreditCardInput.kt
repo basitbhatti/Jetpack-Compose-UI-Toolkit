@@ -53,7 +53,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.basitbhatti.compose.library.ui.theme.AppTheme
 import com.basitbhatti.compose.ui_kit.R
 
 @Composable
@@ -94,7 +93,7 @@ fun CreditCardInput(
             isFlipped = isFlipped
         )
 
-        Spacer(Modifier.height(15.dp))
+        Spacer(Modifier.height(16.dp))
 
         Text(text = "Card Number", style = MaterialTheme.typography.labelLarge)
 
@@ -121,7 +120,7 @@ fun CreditCardInput(
             maxLines = 1,
             visualTransformation = CreditCardVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(15.dp),
+            shape = RoundedCornerShape(16.dp),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White,
@@ -130,7 +129,7 @@ fun CreditCardInput(
             )
         )
 
-        Spacer(Modifier.height(15.dp))
+        Spacer(Modifier.height(16.dp))
 
         Text(text = "Name on Card", style = MaterialTheme.typography.labelLarge)
 
@@ -147,7 +146,7 @@ fun CreditCardInput(
             },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(15.dp),
+            shape = RoundedCornerShape(16.dp),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White,
@@ -156,7 +155,7 @@ fun CreditCardInput(
             )
         )
 
-        Spacer(Modifier.height(15.dp))
+        Spacer(Modifier.height(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth()
@@ -189,7 +188,7 @@ fun CreditCardInput(
                     visualTransformation = ExpiryDateVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(15.dp),
+                    shape = RoundedCornerShape(16.dp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White,
@@ -199,7 +198,7 @@ fun CreditCardInput(
                 )
             }
 
-            Spacer(modifier = Modifier.width(15.dp))
+            Spacer(modifier = Modifier.width(16.dp))
 
             Column(
                 modifier = Modifier.weight(0.5f)
@@ -227,12 +226,13 @@ fun CreditCardInput(
                         keyboardController?.hide()
                         isFlipped = false
                         focusManager.clearFocus()
-                    }), shape = RoundedCornerShape(15.dp), colors = TextFieldDefaults.colors(
+                    }), shape = RoundedCornerShape(16.dp), colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                ))
+                )
+                )
             }
 
         }
@@ -245,18 +245,16 @@ fun CreditCardInput(
 @Composable
 private fun CCPrev() {
 
-    AppTheme {
-        CreditCardInput(
-            modifier = Modifier.background(MaterialTheme.colorScheme.background),
-            cardNumber = "1234567890123456",
-            expiryDate = "MM/YY",
-            cvv = "CVV",
-            name = "John Doe",
-            onCardNumberChange = {},
-            onExpiryDateChange = {},
-            onCvvChange = {},
-            onNameChange = {})
-    }
+    CreditCardInput(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        cardNumber = "1234567890123456",
+        expiryDate = "MM/YY",
+        cvv = "CVV",
+        name = "John Doe",
+        onCardNumberChange = {},
+        onExpiryDateChange = {},
+        onCvvChange = {},
+        onNameChange = {})
 }
 
 
@@ -315,7 +313,7 @@ fun CardBack(cvv: String) {
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
-                .clip(RoundedCornerShape(15.dp))
+                .clip(RoundedCornerShape(16.dp))
         ) {
 
             val w = size.width
@@ -377,7 +375,7 @@ fun CardBack(cvv: String) {
                     style = MaterialTheme.typography.titleMedium,
                     fontStyle = FontStyle.Italic,
                     color = Color.Black,
-                    modifier = Modifier.padding(end = 15.dp)
+                    modifier = Modifier.padding(end = 16.dp)
                 )
             }
 
@@ -407,7 +405,7 @@ fun CardFront(
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
-                .clip(RoundedCornerShape(15.dp))
+                .clip(RoundedCornerShape(16.dp))
         ) {
 
             val w = size.width
@@ -445,7 +443,7 @@ fun CardFront(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(15.dp),
+                .padding(16.dp),
         ) {
 
             Image(
@@ -463,7 +461,7 @@ fun CardFront(
                 painter = painterResource(R.drawable.chip), "Chip", modifier = Modifier.size(40.dp)
             )
 
-            Spacer(Modifier.height(15.dp))
+            Spacer(Modifier.height(16.dp))
 
             val formattedNumber = cardNumber.chunked(4).joinToString("  ")
 
@@ -474,7 +472,7 @@ fun CardFront(
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp)
             )
 
-            Spacer(Modifier.height(15.dp))
+            Spacer(Modifier.height(16.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -561,23 +559,19 @@ fun formatExpiryForDisplay(expiryDigits: String): String {
 @Preview()
 @Composable
 private fun CardFrontPrev() {
-    AppTheme {
-        CardFront(
-            cardNumber = "4532310099991049",
-            expiryDate = "12/25",
-            name = "John Doe",
-            "123",
-            CardType.VISA
-        )
-    }
+    CardFront(
+        cardNumber = "4532310099991049",
+        expiryDate = "12/25",
+        name = "John Doe",
+        "123",
+        CardType.VISA
+    )
 
 }
 
 @Preview()
 @Composable
 private fun CardBackPrev() {
-    AppTheme {
-        CardBack("123")
-    }
+    CardBack("123")
 
 }

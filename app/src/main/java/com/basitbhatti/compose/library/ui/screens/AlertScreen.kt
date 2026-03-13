@@ -84,7 +84,7 @@ fun AlertScreen(
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp, top = 35.dp, end = 15.dp)
+                .padding(start = 16.dp, top = 35.dp, end = 16.dp)
                 .height(50.dp), shape = RoundedCornerShape(5.dp), onClick = {
                 showSimpleAlert = !showSimpleAlert
             }) {
@@ -98,7 +98,7 @@ fun AlertScreen(
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
                 .height(50.dp), shape = RoundedCornerShape(5.dp),
 
             onClick = {
@@ -116,7 +116,7 @@ fun AlertScreen(
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
                 .height(50.dp), shape = RoundedCornerShape(5.dp),
 
             onClick = {
@@ -134,7 +134,7 @@ fun AlertScreen(
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
                 .height(50.dp), shape = RoundedCornerShape(5.dp),
 
             onClick = {
@@ -152,7 +152,7 @@ fun AlertScreen(
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
                 .height(50.dp), shape = RoundedCornerShape(5.dp),
 
             onClick = {

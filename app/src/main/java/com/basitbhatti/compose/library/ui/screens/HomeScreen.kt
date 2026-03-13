@@ -66,18 +66,18 @@ fun HomeScreen(
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .background(MaterialTheme.colorScheme.background)
-            .padding(15.dp)
+            .padding(16.dp)
     ) {
 
         Row(
-            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 15.dp)
+            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 16.dp)
         ) {
 
             Text(text = "Compose UI Kit", style = MaterialTheme.typography.headlineLarge)
 
         }
 
-        Spacer(Modifier.height(15.dp))
+        Spacer(Modifier.height(16.dp))
 
         TextField(
             value = searchValue, onValueChange = {
@@ -86,7 +86,7 @@ fun HomeScreen(
                 .fillMaxWidth()
                 .shadow(
                     elevation = 2.dp, shape = RoundedCornerShape(16.dp)
-                ), shape = RoundedCornerShape(15.dp), colors = TextFieldDefaults.colors(
+                ), shape = RoundedCornerShape(16.dp), colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
@@ -109,8 +109,6 @@ fun HomeScreen(
         FeaturedContent(
             navController = navController
         )
-
-
 
     }
 
@@ -189,7 +187,7 @@ fun FeaturedContent(navController: NavController) {
                 }
             }
 
-            Spacer(Modifier.width(15.dp))
+            Spacer(Modifier.width(16.dp))
 
             Card(
                 modifier = Modifier
@@ -242,7 +240,7 @@ fun FeaturedContent(navController: NavController) {
 
         }
 
-        Spacer(Modifier.height(15.dp))
+        Spacer(Modifier.height(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -314,7 +312,7 @@ fun FeaturedContent(navController: NavController) {
                 }
             }
 
-            Spacer(Modifier.width(15.dp))
+            Spacer(Modifier.width(16.dp))
 
             Card(
                 modifier = Modifier

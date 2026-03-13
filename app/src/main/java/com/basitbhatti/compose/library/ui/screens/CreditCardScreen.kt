@@ -161,7 +161,7 @@ fun HeaderContent() {
         Row(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 15.dp),
+                .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -192,8 +192,8 @@ fun HeaderContent() {
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
-                .padding(horizontal = 10.dp, vertical = 15.dp)
-                .clip(RoundedCornerShape(15.dp))
+                .padding(horizontal = 10.dp, vertical = 16.dp)
+                .clip(RoundedCornerShape(16.dp))
                 .background(
                     MaterialTheme.colorScheme.scrim
                 ),

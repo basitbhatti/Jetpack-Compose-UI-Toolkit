@@ -32,7 +32,7 @@ fun NavGraph(controller: NavHostController) {
         }
 
         composable(Screen.ExpandableCardScreen.route) {
-            ExpandableCardScreen()
+            ExpandableCardScreen(controller)
         }
 
     }

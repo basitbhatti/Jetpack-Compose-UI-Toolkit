@@ -58,7 +58,7 @@ fun SingleButtonAlertDialog(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(15.dp)
+                        .padding(16.dp)
                 ) {
 
                     Spacer(Modifier.height(10.dp))

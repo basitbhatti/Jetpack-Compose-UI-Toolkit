@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.basitbhatti.compose.library.ui.theme.AppTheme
 
 @Composable
 fun CustomIconAlert(
@@ -72,7 +71,7 @@ fun CustomIconAlert(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(15.dp)
+                        .padding(16.dp)
                 ) {
 
                     Spacer(Modifier.height(10.dp))
@@ -130,41 +129,39 @@ fun CustomIconAlert(
 @Composable
 private fun CustomIconAlertPrev() {
 
-    AppTheme {
-        var showAlert by remember { mutableStateOf(true) }
+    var showAlert by remember { mutableStateOf(true) }
 
-        CustomIconAlert(
-            visible = showAlert,
-            onDismissRequest = {
+    CustomIconAlert(
+        visible = showAlert,
+        onDismissRequest = {
 
-            }, icon = {
-                Icon(
-                    imageVector = Icons.Rounded.Delete, contentDescription = ""
-                )
-            }, title = {
-                Text("Delete this file?")
-            }, body = {
-                Text("This action cannot be undone. The file will be permanently removed.")
-            }, positiveButton = {
-                Button(
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFE70A0A)
-                    ), onClick = {
-                        showAlert = !showAlert
-                    }) {
-                    Text("Delete")
-                }
-            }, negativeButton = {
-                Button(
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0x009D9D9D)
-                    ), onClick = {
-                        showAlert = !showAlert
-                    }) {
-                    Text("Cancel", color = Color.DarkGray)
-                }
-            })
-    }
+        }, icon = {
+            Icon(
+                imageVector = Icons.Rounded.Delete, contentDescription = ""
+            )
+        }, title = {
+            Text("Delete this file?")
+        }, body = {
+            Text("This action cannot be undone. The file will be permanently removed.")
+        }, positiveButton = {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFE70A0A)
+                ), onClick = {
+                    showAlert = !showAlert
+                }) {
+                Text("Delete")
+            }
+        }, negativeButton = {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0x009D9D9D)
+                ), onClick = {
+                    showAlert = !showAlert
+                }) {
+                Text("Cancel", color = Color.DarkGray)
+            }
+        })
 
 
 }
