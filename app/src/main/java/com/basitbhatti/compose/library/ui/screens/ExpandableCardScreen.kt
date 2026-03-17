@@ -171,9 +171,6 @@ fun ExpandableCardScreen(
             }
         )
 
-        Spacer(Modifier.height(16.dp))
-
-
         ListFAQ(
             listOf(
                 FAQ(0, "Only One Card Can Expand", ""),
@@ -196,11 +193,12 @@ fun ListFAQ(faqList: List<FAQ>) {
         mutableStateOf<Int?>(null)
     }
 
-    LazyColumn (verticalArrangement = Arrangement.spacedBy(8.dp)){
+    LazyColumn {
         items(faqList){ faq ->
 
             ExpandableCard(
                 expanded = expandedItemId == faq.id,
+                modifier = Modifier.padding(start = 20.dp, top = 16.dp, end = 20.dp),
                 onExpandChange = {
                     expandedItemId = if (expandedItemId == faq.id) null else faq.id
                 },
