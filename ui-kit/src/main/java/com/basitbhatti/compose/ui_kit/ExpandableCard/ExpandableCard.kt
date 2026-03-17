@@ -70,7 +70,6 @@ fun ExpandableCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .animateContentSize()
             .graphicsLayer(
                 rotationX = rotationX,
                 cameraDistance = 15 * LocalDensity.current.density,
@@ -126,7 +125,6 @@ fun ExpandableCard(
                     dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow
                 )
             )
-
         ) {
 
             Box(
@@ -135,11 +133,8 @@ fun ExpandableCard(
                 content()
             }
 
-
         }
 
-
     }
-
 
 }

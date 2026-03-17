@@ -2,6 +2,7 @@ package com.basitbhatti.compose.library.ui.screens
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -36,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.basitbhatti.compose.ui_kit.ExpandableCard.ExpandableCard
+import com.basitbhatti.compose.ui_kit.ExpandableCard.FAQ
 
 @Composable
 fun ExpandableCardScreen(
@@ -44,7 +48,10 @@ fun ExpandableCardScreen(
 ) {
 
     Column (
-        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).windowInsetsPadding(WindowInsets.safeDrawing)
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .windowInsetsPadding(WindowInsets.safeDrawing)
     ) {
 
         var expandedNormal by remember {
@@ -86,22 +93,31 @@ fun ExpandableCardScreen(
             },
             content = {
                 Column (
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(16.dp)
                 ) {
 
                     Box(
-                        modifier = Modifier.fillMaxWidth().height(60.dp).clip(
-                            RoundedCornerShape(16.dp)
-                        ).background(Color.LightGray)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp)
+                            .clip(
+                                RoundedCornerShape(16.dp)
+                            )
+                            .background(Color.LightGray)
                     )
 
                     Spacer(Modifier.height(16.dp))
 
                     Box(
-                        modifier = Modifier.fillMaxWidth().height(60.dp).clip(
-                            RoundedCornerShape(16.dp)
-                        ).background(Color.LightGray)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp)
+                            .clip(
+                                RoundedCornerShape(16.dp)
+                            )
+                            .background(Color.LightGray)
                     )
 
                 }
@@ -110,7 +126,6 @@ fun ExpandableCardScreen(
         )
 
         Spacer(Modifier.height(20.dp))
-
 
         ExpandableCard(
             expanded = expandedIconRotated,
@@ -124,22 +139,31 @@ fun ExpandableCardScreen(
             },
             content = {
                 Column (
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(16.dp)
                 ) {
 
                     Box(
-                        modifier = Modifier.fillMaxWidth().height(60.dp).clip(
-                            RoundedCornerShape(16.dp)
-                        ).background(Color.LightGray)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp)
+                            .clip(
+                                RoundedCornerShape(16.dp)
+                            )
+                            .background(Color.LightGray)
                     )
 
                     Spacer(Modifier.height(16.dp))
 
                     Box(
-                        modifier = Modifier.fillMaxWidth().height(60.dp).clip(
-                            RoundedCornerShape(16.dp)
-                        ).background(Color.LightGray)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp)
+                            .clip(
+                                RoundedCornerShape(16.dp)
+                            )
+                            .background(Color.LightGray)
                     )
 
                 }
@@ -147,9 +171,64 @@ fun ExpandableCardScreen(
             }
         )
 
+        Spacer(Modifier.height(16.dp))
+
+
+        ListFAQ(
+            listOf(
+                FAQ(0, "Only One Card Can Expand", ""),
+                FAQ(2, "Only One Card Can Expand", ""),
+                FAQ(4, "Only One Card Can Expand", ""),
+            )
+        )
+
 
 
     }
 
+
+}
+
+@Composable
+fun ListFAQ(faqList: List<FAQ>) {
+
+    var expandedItemId by remember {
+        mutableStateOf<Int?>(null)
+    }
+
+    LazyColumn (verticalArrangement = Arrangement.spacedBy(8.dp)){
+        items(faqList){ faq ->
+
+            ExpandableCard(
+                expanded = expandedItemId == faq.id,
+                onExpandChange = {
+                    expandedItemId = if (expandedItemId == faq.id) null else faq.id
+                },
+                header = {
+                    Text(faq.question)
+                },
+                content = {
+                    Column (
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(60.dp)
+                                .clip(
+                                    RoundedCornerShape(16.dp)
+                                )
+                                .background(Color.LightGray)
+                        )
+
+                    }
+                }
+            )
+
+        }
+    }
 
 }
